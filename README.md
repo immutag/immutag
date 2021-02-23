@@ -44,7 +44,7 @@ All files have a bitcoin (global) address. The user supplies their own private k
 
 ### Distribution and sharing
 
-The files are discoverable on on a distributed file network created with git-annex, but ipfs or something else can be used. Again, everything can be kept as local as the user wants and can be kept offline. The files are found by author created tags and metadata. Anyone can copy files that are pushed to the internet and create their own tags, but the chronology will always show who was the early author.
+The files are discoverable on a distributed file network created with git-annex, but ipfs or something else can be used. Again, everything can be kept as local as the user wants and can be kept offline. The files are found by author created tags and metadata. Anyone can copy files that are pushed to the internet and create their own tags, but the chronology will always show who was the early author.
 
 ### Versioning
 
@@ -76,7 +76,7 @@ An initialized immutag content directory has the following structure.
 ├── wallet_info.json  | Bitcoin wallet seed, including mnemonic.
 ```
 
-Immutag's scripts have the following directory structure. The scripts pipe from one another, making it functional and easy to upgrade, refactor, and maintain.
+Immutag's scripts have the following directory structure. The scripts pipe from one another, making it functional-like and easy to upgrade, refactor, and maintain.
 
 ```
 .immutag-share
