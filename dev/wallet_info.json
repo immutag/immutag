@@ -1,0 +1,12 @@
+{
+  "mnemonic": "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo",
+  "entropy": "8418d45368897c30fe64d626303065c12814a6ed09868884f0d10dfca90cd370",
+  "entropy_bits": 256,
+  "language": "english",
+  "passphrase": "",
+  "seed": {
+    "seed": "1b18c042cebf3607ace3b79821db7a2d6d825d3ff845e4ab4914dbfe826abfddfaa16a7fc1c29208aaeaa263ac3858470b14820f65db09210595897afaf834ab",
+    "bip32_xpriv": "xprv9s21ZrQH143K3qvKzyq6WsXTtTWwcaKfGtD7J7yKPtKSF5VRJrADXqYE9DZAdaoyrWLj5qSbvvE8T6ZnCMMNSfea7Hm7PxqfhyKcQWSiTTX",
+    "bip32_xpub": "xpub661MyMwAqRbcGKzo71N6t1UCSVMS233We78i6WNvxDrR7spZrPUU5drhzYAy14HwqZ88XvEW9k5zmhT9R6KnxNNR4V7kKh6YBCqJiVF24pK"
+  }
+}
