@@ -67,3 +67,5 @@ RUN nix-channel --update; nix-env -iA nixpkgs.nix
 RUN nix-env -iA nixpkgs.shunit2
 
 WORKDIR /immutag
+
+# Nix install section is from https://github.com/heathdrobertson/ubuntu_nix/blob/main/Dockerfile.
