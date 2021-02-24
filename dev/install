@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p -m 0755 $HOME/.local/bin
+mkdir -m 0755 $HOME/.local/bin/immutag
