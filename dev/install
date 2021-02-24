@@ -4,3 +4,5 @@ mkdir -p -m 0755 $HOME/.local/bin
 mkdir -m 0755 $HOME/.local/bin/immutag
 
 cp /Downloads/immutag/dev/_imt_add_file.sh $HOME/.local/bin/immutag/_imt_add_file
+cp /Downloads/immutag/dev/_imt_append_list.sh $HOME/.local/bin/immutag/_imt_append_list
+cp /Downloads/immutag/dev/_imt_new_index_addr.sh $HOME/.local/bin/immutag/_imt_new_index_addr
