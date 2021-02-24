@@ -13,8 +13,8 @@ oneTimeSetUp() {
 	#echo "correct" > correct.txt
 	#echo "shear" > shear.txt
 	#echo "develop" > develop.txt
-	./cmd_add.sh foo.txt test test1 test2 test3
-	./cmd_add.sh bar.txt test test1 test2 test3
+	imt_add foo.txt test test1 test2 test3
+	imt_add bar.txt test test1 test2 test3
 }
 
 testEquality() {

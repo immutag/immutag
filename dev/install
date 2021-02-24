@@ -3,6 +3,10 @@
 mkdir -p -m 0755 $HOME/.local/bin
 mkdir -m 0755 $HOME/.local/bin/immutag
 
+cp /immutag/dev/cmd_add.sh $HOME/.local/bin/immutag/imt_add
 cp /immutag/dev/_imt_add_file.sh $HOME/.local/bin/immutag/_imt_add_file
 cp /immutag/dev/_imt_append_list.sh $HOME/.local/bin/immutag/_imt_append_list
 cp /immutag/dev/_imt_new_index_addr.sh $HOME/.local/bin/immutag/_imt_new_index_addr
+cp /immutag/dev/_imt_get_xpriv_from_wallet_info.sh $HOME/.local/bin/immutag/_imt_get_xpriv_from_wallet_info
+cp /immutag/dev/_imt_get_bip44_address_from_xpriv.sh $HOME/.local/bin/immutag/_imt_get_bip44_address_from_xpriv
+cp /immutag/dev/_imt_get_xpriv_from_wallet_info.sh $HOME/.local/bin/immutag/_imt_get_xpriv_from_wallet_info
