@@ -17,4 +17,4 @@ metadata=$(echo "$fname" "$ext" "$tags")
 echo "$file"
 echo "$metadata"
 
-cat file-list.txt | ./new_index_addr.sh | ./append_list.sh "$metadata" | ./add_file.sh "$file"
+cat file-list.txt | ./new_index_addr.sh | ./append_list.sh "$metadata" | add_file "$file"
