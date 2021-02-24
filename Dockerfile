@@ -105,9 +105,9 @@ ENV PATH=/root/.local/bin:/root/.local/bin/immutag:$PATH
 
 WORKDIR /Downloads
 WORKDIR /Downloads/immutag
-COPY dev /Downloads/immutag/dev
+#COPY dev /Downloads/immutag/dev
 WORKDIR /Downloads/immutag/dev
-RUN bash -c "chmod +x install && yes | ./install"
+#RUN bash -c "chmod +x install && yes | ./install"
 
 #WORKDIR $HOME/.local
 #WORKDIR $HOME/.local/bin
