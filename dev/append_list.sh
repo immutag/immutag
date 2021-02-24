@@ -3,7 +3,7 @@
 index_addr="$(</dev/stdin)"
 tags="$@"
 
-echo "$index_addr $tags" >> $HOME/projects/work/immutag/dev/file-list.txt
+echo "$index_addr $tags" >> file-list.txt
 
 new_addr=$(echo "$index_addr" | cut -d " " -f 2)
 
