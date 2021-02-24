@@ -32,9 +32,22 @@ For examaple, open it up with xdg-open (automatically opens the file with the ap
 
 Actually, the find file menu may appear familiar. It's literally fzf, a cli utility to find files.
 
-## Installation
+## Install (dev)
 
-Coming soon..
+Clone this repo, change into it, and then
+
+```
+sudo docker build -t immutag:0.0.1 .
+sudo docker-compose up -d
+```
+
+If you want to explore 'inside' the containerized environment.
+
+`sudo docker exec -it immutag_environment_1 bash`
+
+***You can modify the host immutag files where you spun-up the container from.***
+
+At the moment, the install is for a development environment and not for user distribution.
 
 ## How it works
 
