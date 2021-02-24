@@ -101,6 +101,8 @@ WORKDIR /fzf
 RUN bash -c "chmod +x install && yes | ./install"
 
 # immutag install
+ENV PATH=/root/.local/bin:/root/.local/bin/immutag:$PATH
+
 WORKDIR /Downloads
 WORKDIR /Downloads/immutag
 COPY dev /Downloads/immutag/dev
