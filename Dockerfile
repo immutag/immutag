@@ -64,6 +64,6 @@ ENV \
 RUN nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
 RUN nix-channel --update; nix-env -iA nixpkgs.nix
 
-WORKDIR /home/ci
+RUN nix-env -iA nixpkgs.shunit2
 
-CMD ["nix-shell"]
+WORKDIR /immutag
