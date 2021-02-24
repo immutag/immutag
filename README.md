@@ -37,17 +37,30 @@ Actually, the find file menu may appear familiar. It's literally fzf, a cli util
 Clone this repo, change into it, and then
 
 ```
+docker volume create --name=immutag-cargo-data
 sudo docker build -t immutag:0.0.1 .
-sudo docker-compose up -d
 ```
 
 If you want to explore 'inside' the containerized environment.
 
-`sudo docker exec -it immutag_environment_1 bash`
 
 ***You can modify the host immutag files where you spun-up the container from.***
 
 At the moment, the install is for a development environment and not for user distribution.
+
+## Dev Workflow
+
+
+Launch
+
+```
+sudo docker-compose up -d
+sudo docker exec -it immutag_environment_1 bash
+```
+
+Stop
+
+`sudo docker-compose stop`
 
 ## How it works
 
