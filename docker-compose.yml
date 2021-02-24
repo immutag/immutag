@@ -5,9 +5,9 @@ services:
     image: immutag:0.0.1
     volumes:
       - ./:/immutag
-        # - immutag-cargo-data:/usr/local/cargo
+      - immutag-cargo-data:/usr/local/cargo
     tty: true
 
-    #volumes:
-        #immutag-cargo-data:
-        #  external: true
+volumes:
+ immutag-cargo-data:
+  external: true
