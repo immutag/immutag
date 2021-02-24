@@ -44,7 +44,7 @@ All files have a bitcoin (global) address. The user supplies their own private k
 
 ### Distribution and sharing
 
-The files are discoverable on a distributed file network created with git-annex, but ipfs or something else can be used. Again, everything can be kept as local as the user wants and can be kept offline. The files are found by author created tags and metadata. Anyone can copy files that are pushed to the internet and create their own tags, but the chronology will always show who was the early author.
+The files are discoverable on a distributed file network created with git-annex, but ipfs or something else can be used. Again, everything can be kept as local as the user wants and can be kept offline. The files are found by author created tags and metadata. Anyone can copy files (i.e., forking) that are pushed to the internet and create their own tags, but the chronology will always show who was the early author.
 
 ### Versioning
 
@@ -60,48 +60,43 @@ It's excellent for managing media files, such as images, music, and video but it
 
 ## Overview
 
-An initialized immutag content directory has the following structure.
+An immutag directory has the following structure and includes everything needed for immutag to work. The idea is to allow the user to initialize immutag wherever they please on the host filesystem, like with git. To keep it simple and consistent, even if the immutag source code exists in one directory already, it will be included in any other initialized directories. Likely there will be no global vs local install system, which adds complications. Perhaps the user just chooses how they want to set it up. If they want a global-like setup, they can earmark a specific immutag directory that will be for systemwide efforts.
 
 ```
-.immutag
+$HOME/immutag
+├── account
+│   ├── wallet_info.json| Bitcoin wallet seed, including mnemonic.
 ├── metadata
 │   ├── file-list.txt | Maps globally addressed files to metadata.
 │   ├── .git          | Content hashes found by traversing tree.
 ├── files             | Store of globally addressed files.
-│   ├── 17nZVxS       | Version and distrubtion via git-annex,
-│   └── 1CaKbES       | but ipfs or other can be drop-in-replace.
-│   └── ...
-│   ├── .git
-│       ├── git-annex
-├── wallet_info.json  | Bitcoin wallet seed, including mnemonic.
-```
-
-Immutag's scripts have the following directory structure. The scripts pipe from one another, making it functional-like and easy to upgrade, refactor, and maintain.
-
-```
-.immutag-share
+    ├── 17nZVxS
+    ├── 1CaKbES
+    ├── ...
+    ├── .git          | Version and distrubtion via git-annex,
+        ├── git-annex | but ipfs or other can be dropped in on top.
 ├── bin
-    ├── add_file.sh
-    ├── address_create_pubkey.sh
-    ├── append_list.sh
-    ├── bip32_derive.sh
-    ├── bip32_derive_m44_hd.sh
-    ├── bip39_get_seed.sh
-    ├── bip44_info_derive_from_xpriv.sh
-    ├── cmd_add.sh
-    ├── create_wallet_info_file_from_mnemonic.sh
-    ├── find_fuzzy.sh
-    ├── generate_bip39.sh
-    ├── generate_from_24_word_mnemonic.sh
-    ├── get_bip44_address_from_xpriv.sh
-    ├── get_rid_of_quotation_marks.sh
-    ├── get_xpriv_from_wallet_info.sh
-    ├── json_parse_p2pkh_address.sh
-    ├── new_addr.sh
-    ├── new_index_addr.sh
+    ├── $addr/add_file
+    ├── $addr/address_create_pubkey
+    ├── $addr/append_list
+    ├── $addr/bip32_derive
+    ├── $addr/bip32_derive_m44_hd
+    ├── $addr/bip39_get_seed
+    ├── $addr/bip44_info_derive_from_xpriv
+    ├── $addr/cmd_add
+    ├── $addr/create_wallet_info_file_from_mnemonic
+    ├── $addr/find_fuzzy
+    ├── $addr/generate_bip39
+    ├── $addr/generate_from_24_word_mnemonic
+    ├── $addr/get_bip44_address_from_xpriv
+    ├── $addr/get_rid_of_quotation_marks
+    ├── $addr/get_xpriv_from_wallet_info
+    ├── $addr/json_parse_p2pkh_address
+    ├── $addr/new_addr
+    ├── $addr/new_index_addr
 ```
 
-The above directory will be added to the users path.
+The bin directory will be added to the user's path. These immutag bin files should be symlinked from the file store. The exact versions of immutag can now be determinstically rolled backwards and forward. This may open up [other possibilities](#other-possibilities).
 
 ## Useful info
 
@@ -117,6 +112,16 @@ Suggestion: to open a file, use xdg-open or some other clever file-opener.
 
 ## Works with
 
-* hal (rust hal): 0.7.2
-* sed (GNU sed) 4.2.2
+* hal: 0.7.2
+* sed: 4.2.2
 * cut (GNU coreutils) 8.25
+* git: 2.3
+* git-annex: 8.20210127
+
+## Other possibilities
+
+This may open up creating a modular nix type of file management for 'free'. That is immutag can be instantiated in more than one place, like git, if the user is allowed to modify the bin directory with symlinks of their own from the file store. The version of the bin of the bin files can be ascertained from the metadata and searched like any other immutag file. The exact content hashes of each file version can be extracted from git-annex's tree.
+
+See how the file store opens up a similar setup as nix. Below is the jq binary symlink relationship (`ls -l`) of jq (a json cli tool) on a system running a nix package manager.
+
+lrwxrwxrwx 1 7db9a wheel 61 Dec 31  1969 /nix/store/q4q25qih2ychclzggwhw715p7v3jbn9g-user-environment/bin/jq -> /nix/store/hjcxlrdbw1v07y4wp19vm5k1i3l1l5bz-jq-1.6-bin/bin/jq
