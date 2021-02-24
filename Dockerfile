@@ -100,4 +100,15 @@ WORKDIR /fzf
 
 RUN bash -c "chmod +x install && yes | ./install"
 
+# immutag install
+COPY dev/install /home/ci/
+WORKDIR /home/ci
+RUN bash -c "chmod +x install && yes | ./install"
+
+#WORKDIR $HOME/.local
+#WORKDIR $HOME/.local/bin
+#WORKDIR $HOME/.local/bin/immutag
+#
+#COPY dev/add_file.sh $HOME/.local/bin/immutag/_add_file
+
 WORKDIR /immutag/dev
