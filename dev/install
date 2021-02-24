@@ -2,3 +2,5 @@
 
 mkdir -p -m 0755 $HOME/.local/bin
 mkdir -m 0755 $HOME/.local/bin/immutag
+
+cp /Downloads/immutag/dev/add_file.sh $HOME/.local/bin/immutag/add_file
