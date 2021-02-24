@@ -3,9 +3,20 @@
 
 # test_file1.txt
 
+test_absolute_dir_path="$1"
+
+echo ""
+echo "path"
+echo "$test_absolute_dir_path"
+echo ""
+
 oneTimeSetUp() {
-	mkdir files
-	touch file-list.txt
+	cd "$test_absolute_dir_path"
+	imt_init immutag
+
+	cp /immutag/dev/wallet_info.json "$test_absolute_dir_path"/immutag/
+	cd immutag
+
 	echo "foo" > foo.txt
 	echo "bar" > bar.txt
 	#echo "remake" > remake.txt
@@ -18,6 +29,8 @@ oneTimeSetUp() {
 }
 
 testEquality() {
+    cd "$test_absolute_dir_path"
+    cd immutag
     result_foo=$(eval cat files/1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q)
     result_bar=$(eval cat files/17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr)
     assertEquals 'foo' "$result_foo"
@@ -26,15 +39,18 @@ testEquality() {
 
 # Test complaines it can't remove files because they don't exist, but test passes.
 oneTimeTearDown() {
-	rm file-list.txt \
-	foo.txt \
-	bar.txt
-	#remake.txt
-	#consign.txt
-	#correct.txt
-	#shear.txt
-	#develop.txt
-	rm -r files/
+	cd "$test_absolute_dir_path"
+	rm -r immutag
+
+	#rm file-list.txt \
+	#foo.txt \
+	#bar.txt
+	##remake.txt
+	##consign.txt
+	##correct.txt
+	##shear.txt
+	##develop.txt
+	#rm -r files/
 }
 
 . shunit2
