@@ -40,7 +40,7 @@ testEquality() {
 # Test complaines it can't remove files because they don't exist, but test passes.
 oneTimeTearDown() {
 	cd "$test_absolute_dir_path"
-	rm -r immutag
+	#rm -r immutag
 
 	#rm file-list.txt \
 	#foo.txt \
