@@ -8,29 +8,33 @@ This is a working prototype glued together with bash scripts, but it's modular, 
 
 ## Example
 
+Initialize an immutag content directory with a bitcoin mnemonic.
+
+`imt init <dir> <mnemonic>`
+
+`imt init my-dir "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
+
 Add a music file with tags that can be used to find it later.
-
-`imt add Vivaldi\ -\ Four\ Seasons.mp3 music vivaldi classical`
-
-1F2qMp82j3BLopARtHM91SqvEgXWzKNoDB
-
-What we did in general.
 
 `imt add <file> <tags...>`
 
-1F2qM is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
+`imt add Vivaldi\ -\ Four\ Seasons.mp3 music vivaldi classical`
+
+1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2
+
+1Akbr is the is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
 
 Since we likely won't remember the long global file address, we can search for it by tag or metadata.
 
 `imt find`
 
-A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, `music`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1F2qMp82j3BLopARtHM91SqvEgXWzKNoDBA, in this case. That can be pipped into whatever you want or copied to open it up.
+A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, `music`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2, in this case. That can be pipped into whatever you want or copied to open it up.
 
-For examaple, open it up with xdg-open (automatically opens the file with the appropriate default or user defined software, such as a browser.)
+For examaple, open a file with xdg-open.
 
 `xdg-open $(imt find)`
 
-Actually, the find file menu may appear familiar. It's literally fzf, a cli utility to find files.
+Actually, the find file menu may appear familiar. It's fzf: a cli utility to find files.
 
 ## Install (dev)
 
@@ -38,30 +42,32 @@ Clone this repo, change into it, and then
 
 ```
 docker volume create --name=immutag-cargo-data
-sudo docker volume create --name=nix-data
-sudo docker build -t immutag:0.0.1 .
+docker volume create --name=nix-data
+docker build -t immutag:0.0.1 .
 ```
-
-If you want to explore 'inside' the containerized environment.
-
-
-***You can modify the host immutag files where you spun-up the container from.***
 
 At the moment, the install is for a development environment and not for user distribution.
 
 ## Dev Workflow
 
 
-Launch
+**To launch.**
 
 ```
-sudo docker-compose up -d
-sudo docker exec -it immutag_environment_1 bash
+docker-compose up -d
+docker exec -it immutag_environment_1 bash
 ```
 
-Stop
+Once the container is running, you can edit the code base without rebuilding the image. However, if you update the install script, while inside the container in the host mounted directory, you must run:
 
-`sudo docker-compose stop`
+`./install`
+
+The install script places the immutag scripts in the user's path.
+
+**To stop.**
+
+`docker-compose stop`
+
 
 ## How it works
 
@@ -87,7 +93,7 @@ It's excellent for managing media files, such as images, music, and video but it
 
 ## Overview
 
-An immutag directory has the following structure and includes everything needed for immutag to work. The idea is to allow the user to initialize immutag wherever they please on the host filesystem, like with git. To keep it simple and consistent, even if the immutag source code exists in one directory already, it will be included in any other initialized directories. Likely there will be no global vs local install system, which adds complications. Perhaps the user just chooses how they want to set it up. If they want a global-like setup, they can earmark a specific immutag directory that will be for systemwide efforts.
+An immutag directory has the following structure and includes everything needed for immutag to work. The idea is to allow the user to initialize immutag wherever they please on the host filesystem, like with git. It may be best to avoid having a global vs local install system, which adds complications. Perhaps the user just chooses how they want to set it up. If they want a global-like setup, they can earmark a specific immutag directory that will be for systemwide efforts.
 
 ```
 $HOME/immutag
@@ -102,35 +108,12 @@ $HOME/immutag
     ├── ...
     ├── .git          | Version and distrubtion via git-annex,
         ├── git-annex | but ipfs or other can be dropped in on top.
-├── bin
-    ├── $addr/add_file
-    ├── $addr/address_create_pubkey
-    ├── $addr/append_list
-    ├── $addr/bip32_derive
-    ├── $addr/bip32_derive_m44_hd
-    ├── $addr/bip39_get_seed
-    ├── $addr/bip44_info_derive_from_xpriv
-    ├── $addr/cmd_add
-    ├── $addr/create_wallet_info_file_from_mnemonic
-    ├── $addr/find_fuzzy
-    ├── $addr/generate_bip39
-    ├── $addr/generate_from_24_word_mnemonic
-    ├── $addr/get_bip44_address_from_xpriv
-    ├── $addr/get_rid_of_quotation_marks
-    ├── $addr/get_xpriv_from_wallet_info
-    ├── $addr/json_parse_p2pkh_address
-    ├── $addr/new_addr
-    ├── $addr/new_index_addr
 ```
-
-The bin directory will be added to the user's path. These immutag bin files should be symlinked from the file store. The exact versions of immutag can now be determinstically rolled backwards and forward. This may open up [other possibilities](#other-possibilities).
-
 ## Useful info
 
 While in fzf, find tags with exact matches use `'`: say you want to find a file with a `foo` and `bar` tag.
 
 `imt find`
-
 `'foo 'bar`
 
 Suggestion: to open a file, use xdg-open or some other clever file-opener.
@@ -144,6 +127,7 @@ Suggestion: to open a file, use xdg-open or some other clever file-opener.
 * cut (GNU coreutils) 8.25
 * git: 2.3
 * git-annex: 8.20210127
+* jq: 1.5
 
 ## Other possibilities
 
