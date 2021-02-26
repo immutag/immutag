@@ -132,9 +132,12 @@ Teardown.
 
 ## Useful info
 
-While in fzf, find tags with exact matches use `'`: say you want to find a file with a `foo` and `bar` tag.
+While in fzf, find tags with exact matches use `'`: say you want to find a file with a `foo` and `bar` tag:
 
 `imt find`
+
+...now in fzf:
+
 `'foo 'bar`
 
 Suggestion: to open a file, use xdg-open or some other clever file-opener.
