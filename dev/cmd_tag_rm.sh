@@ -2,4 +2,4 @@
 
 addr="$(</dev/stdin)"
 
-echo "$addr" | ./_imt_tag_rm.sh file-list.txt
+echo "$addr" | _imt_tag_rm file-list.txt
