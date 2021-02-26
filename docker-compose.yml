@@ -6,7 +6,7 @@ services:
     volumes:
       - ./:/immutag
       - immutag-cargo-data:/usr/local/cargo
-      - nix-data:/nix
+        #- nix-data:/nix
     tty: true
 
 volumes:
