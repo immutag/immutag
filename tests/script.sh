@@ -2,7 +2,7 @@
 
 arg="$1"
 
-if  [ "$arg" = "docker-restart" ]; then
+if  [ "$arg" = "hard-start" ]; then
     sudo docker-compose stop
     sudo docker-compose up -d --remove-orphans --force-recreate
 fi
