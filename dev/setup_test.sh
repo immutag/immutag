@@ -19,18 +19,18 @@ testEquality() {
 }
 
 # Test complaines it can't remove files because they don't exist, but test passes.
-oneTimeTearDown() {
-    rm -r immutag
-    #rm file-list.txt \
-    #foo.txt \
-    #bar.txt
-    ##remake.txt
-    ##consign.txt
-    ##correct.txt
-    ##shear.txt
-    ##develop.txt
-    #rm -r files/
-}
+#oneTimeTearDown() {
+#    rm -r immutag
+#    #rm file-list.txt \
+#    #foo.txt \
+#    #bar.txt
+#    ##remake.txt
+#    ##consign.txt
+#    ##correct.txt
+#    ##shear.txt
+#    ##develop.txt
+#    #rm -r files/
+#}
 
 . shunit2
 # 1 1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q foo txt test test1 test2 test3
