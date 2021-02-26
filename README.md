@@ -42,8 +42,7 @@ Clone this repo, change into it, and then
 
 ```
 docker volume create --name=immutag-cargo-data
-docker volume create --name=nix-data
-docker build -t immutag:0.0.1 .
+docker build -t immutag:0.0.2 .
 ```
 
 At the moment, the install is for a development environment and not for user distribution.
