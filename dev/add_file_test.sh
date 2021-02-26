@@ -3,18 +3,17 @@
 
 # test_file1.txt
 
-test_absolute_dir_path="$1"
+test_absolute_dir_path="$(</dev/stdin)"
 
-echo ""
-echo "path"
-echo "$test_absolute_dir_path"
-echo ""
+#echo ""
+#echo "path"
+#echo "$test_absolute_dir_path"
+#echo ""
 
 oneTimeSetUp() {
 	cd "$test_absolute_dir_path"
-	imt_init immutag
+	imt_init immutag "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"
 
-	cp /immutag/dev/wallet_info.json "$test_absolute_dir_path"/immutag/
 	cd immutag
 
 	echo "foo" > foo.txt
@@ -40,7 +39,7 @@ testEquality() {
 # Test complaines it can't remove files because they don't exist, but test passes.
 oneTimeTearDown() {
 	cd "$test_absolute_dir_path"
-	#rm -r immutag
+	rm -r immutag
 
 	#rm file-list.txt \
 	#foo.txt \
