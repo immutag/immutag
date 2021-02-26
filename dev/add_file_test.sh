@@ -1,15 +1,17 @@
 #! /bin/sh
 
-oneTimeSetup() {
-	imt_add foo.txt tag1 tag2 tag3
-	imt_add bar.txt tag1 tag2 tag3
-}
+#oneTimeSetup() {
+#	imt_add foo.txt tag1 tag2 tag3
+#	imt_add bar.txt tag1 tag2 tag3
+#}
 
 testEquality() {
+    imt_add foo.txt tag1 tag2 tag3
+    imt_add bar.txt tag1 tag2 tag3
     result_foo=$(eval cat files/1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q)
     result_bar=$(eval cat files/17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr)
     assertEquals 'foo' "$result_foo"
-    assertEquals 'ba' "$result_bar"
+    assertEquals 'bar' "$result_bar"
 }
 
 . shunit2
