@@ -25,6 +25,7 @@ cp /immutag/dev/cmd_find.sh $HOME/.local/bin/immutag/imt_find
 cp /immutag/dev/cmd_find.sh $HOME/.local/bin/immutag/imt_find
 cp /immutag/dev/cmd_tag_replace.sh $HOME/.local/bin/immutag/imt_tag_replace
 cp /immutag/dev/cmd_tag_add.sh $HOME/.local/bin/immutag/imt_tag_add
+cp /immutag/dev/cmd_commit_list.sh $HOME/.local/bin/immutag/imt_commit_list
 
 cp /immutag/dev/_imt_add_file.sh $HOME/.local/bin/immutag/_imt_add_file
 cp /immutag/dev/_imt_append_list.sh $HOME/.local/bin/immutag/_imt_append_list
