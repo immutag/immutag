@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+arg="$1"
+
+if  [ "$arg" = "docker-restart" ]; then
+    sudo docker-compose stop
+    sudo docker-compose up -d --remove-orphans --force-recreate
+fi
+
 # Stage test files and permission, along with other install tasks.
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
 
