@@ -115,6 +115,4 @@ WORKDIR /Downloads/immutag/dev
 #
 #COPY dev/add_file.sh $HOME/.local/bin/immutag/_add_file
 
-RUN nix-env -iA nixpkgs.xdotool
-
 WORKDIR /immutag/dev
