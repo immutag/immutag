@@ -14,8 +14,8 @@ testEquality() {
     result_foo=$(eval rg 1CaKb file-list.txt)
     result_bar=$(eval rg 17nZV file-list.txt)
 
-    assertEquals "1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q foo txt tag1 tag2 tag3 tag4 tag5 tag6 tag7" "$result_foo"
-    assertEquals "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr bar txt tag1 tag2 tag3 tag4 tag5 tag6 tag7" "$result_bar"
+    assertEquals "1 1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q foo txt tag1 tag2 tag3 tag4 tag5 tag6 tag7" "$result_foo"
+    assertEquals "2 17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr bar txt tag1 tag2 tag3 tag4 tag5" "$result_bar"
 }
 
 . shunit2
