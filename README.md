@@ -108,27 +108,14 @@ It's excellent for managing media files, such as images, music, and video but it
 
 ## Test
 
-Make sure you're in the container. And please bear with as cli tests become more automated.
+Setup, run, and teardown tests
 
-Install tests along with immutag scripts.
+`test/.script.sh hard-start`
 
-`./install`
+For a faster dev and test cycle, run against an already running container from `hard-start`.
 
-Change into test location.
+`test/.script.sh`
 
-`cd /root`
-
-Run setup.
-
-`./setup_test.sh`
-
-Test.
-
-`cd immutag && ./add_file_test.sh`
-
-Teardown.
-
-`cd ../ && ./teardown_test.sh`
 
 ## Useful info
 
