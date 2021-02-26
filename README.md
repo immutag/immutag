@@ -48,10 +48,9 @@ docker build -t immutag:0.0.1 .
 
 At the moment, the install is for a development environment and not for user distribution.
 
-## Dev Workflow
+## Dev workflow
 
-
-**To launch.**
+To launch.
 
 ```
 docker-compose up -d
@@ -64,10 +63,11 @@ Once the container is running, you can edit the code base without rebuilding the
 
 The install script places the immutag scripts in the user's path.
 
-**To stop.**
+To stop.
 
 `docker-compose stop`
 
+To jump to test info, see [here](#test).
 
 ## How it works
 
@@ -83,15 +83,7 @@ The files are discoverable on a distributed file network created with git-annex,
 
 Every file version can be cryptographically reconstructed. The local file store uses git-annex. That also gives the user a distributed versioned file system and sharing. There are plans to make ipfs work out-of-the-box, but developers can drop-it-in on their own. The metadata and tags are stored locally on a single file. It's versioned with git. That means any updates to the tags or metadata can be cryptographically mapped to a specific version of the file (remember, it's on git-annex).
 
-## Use cases
-
-It's excellent for managing media files, such as images, music, and video but it can be used for any files, including software repositories (immutag will flatten them into a single file, likely .tar) before copying it into it's store. Really it can used on any type of files, whether version control is needed or not.
-
-## Test
-
-`./add_file_test.sh`
-
-## Overview
+### Directory structure
 
 An immutag directory has the following structure and includes everything needed for immutag to work. The idea is to allow the user to initialize immutag wherever they please on the host filesystem, like with git. It may be best to avoid having a global vs local install system, which adds complications. Perhaps the user just chooses how they want to set it up. If they want a global-like setup, they can earmark a specific immutag directory that will be for systemwide efforts.
 
@@ -109,6 +101,35 @@ $HOME/immutag
     ├── .git          | Version and distrubtion via git-annex,
         ├── git-annex | but ipfs or other can be dropped in on top.
 ```
+
+### Use cases
+
+It's excellent for managing media files, such as images, music, and video but it can be used for any files, including software repositories (immutag will flatten them into a single file, likely .tar) before copying it into it's store. Really it can used on any type of files, whether version control is needed or not.
+
+## Test
+
+Make sure you're in the container. And please bear with as cli tests become more automated.
+
+Install tests along with immutag scripts.
+
+`./install`
+
+Change into test location.
+
+`cd /root`
+
+Run setup.
+
+`./setup_test.sh`
+
+Test.
+
+`cd immutag && ./add_file_test.sh`
+
+Teardown.
+
+`cd ../ && ./teardown_test.sh`
+
 ## Useful info
 
 While in fzf, find tags with exact matches use `'`: say you want to find a file with a `foo` and `bar` tag.
