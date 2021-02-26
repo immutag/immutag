@@ -3,6 +3,10 @@
 mkdir -p -m 0755 $HOME/.local/bin
 mkdir -m 0755 $HOME/.local/bin/immutag
 
+# Copy test script into container's appropriate dir because shunit won't allow test script to change directory.
+cp /immutag/dev/setup_test.sh /root/
+cp /immutag/dev/add_file_test.sh /root/
+
 cp /immutag/dev/cmd_add.sh $HOME/.local/bin/immutag/imt_add
 cp /immutag/dev/cmd_init.sh $HOME/.local/bin/immutag/imt_init
 
