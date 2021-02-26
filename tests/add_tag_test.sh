@@ -11,10 +11,10 @@ fi
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
 
 # Setup the test.
-sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test && ./setup_test.sh'
+sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test && ./add_tag_setup_test.sh'
 
 # Run the target test.
-sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/immutag && ./add_file_test.sh'
+sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/immutag && ./add_tag_test.sh'
 
 # Teardown the test.
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
