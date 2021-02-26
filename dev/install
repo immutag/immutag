@@ -18,6 +18,8 @@ cp /immutag/dev/cmd_add.sh $HOME/.local/bin/immutag/imt_add
 cp /immutag/dev/cmd_init.sh $HOME/.local/bin/immutag/imt_init
 cp /immutag/dev/cmd_tag_rm.sh $HOME/.local/bin/immutag/imt_tag_rm
 cp /immutag/dev/cmd_find.sh $HOME/.local/bin/immutag/imt_find
+cp /immutag/dev/cmd_find.sh $HOME/.local/bin/immutag/imt_find
+cp /immutag/dev/cmd_tag_add.sh $HOME/.local/bin/immutag/imt_tag_add
 
 cp /immutag/dev/_imt_add_file.sh $HOME/.local/bin/immutag/_imt_add_file
 cp /immutag/dev/_imt_append_list.sh $HOME/.local/bin/immutag/_imt_append_list
@@ -32,3 +34,4 @@ cp /immutag/dev/_imt_generate_from_24_word_mnemonic.sh $HOME/.local/bin/immutag/
 cp /immutag/dev/_imt_write_wallet_info_file.sh $HOME/.local/bin/immutag/_imt_write_wallet_info_file
 cp /immutag/dev/_imt_create_wallet_info_file_from_mnemonic.sh $HOME/.local/bin/immutag/_imt_create_wallet_info_file_from_mnemonic
 cp /immutag/dev/_imt_tag_rm.sh $HOME/.local/bin/immutag/_imt_tag_rm
+cp /immutag/dev/_imt_tag_update.sh $HOME/.local/bin/immutag/_imt_tag_update
