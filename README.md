@@ -1,6 +1,8 @@
 # Immutag
 
-An experimental immutable and distributed filesystem that can be searched using tags and other metadata. Files are globally discoverable, but it can be kept to a local network or even a single machine. Files can be distributed in a like manner. File authors can cryptographically prove the authenticity and chronology of their creations. Worldwide. No vendor-lock. All the parts are interchangeable and it's useful to an individual or a community. It's really a protocol so it can be written in any language for use by servers to web browsers to embedded devices.
+An experimental immutable and distributed filesystem that can be searched by tags and other metadata. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
+
+Files and tags can be seperately pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin) making them globally discoverable. However, the user can choose to keep all or some of the data offline or on a local network. And file authors can cryptographically prove the authenticity and chronology of their creations.
 
 This is a working prototype glued together with bash scripts, but it's modular, functional in style, and tested. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
 
