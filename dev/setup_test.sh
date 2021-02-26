@@ -15,7 +15,7 @@ testEquality() {
     result_test=$(eval ls immutag/add_file_test.sh)
     assertEquals "foo" "$result_foo"
     assertEquals "bar" "$result_bar"
-    assertEquals "add_file_test" "$result_test"
+    assertEquals "immutag/add_file_test.sh" "$result_test"
 }
 
 # Test complaines it can't remove files because they don't exist, but test passes.
