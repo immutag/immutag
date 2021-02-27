@@ -36,7 +36,7 @@ Since we likely won't remember the long global file address, we can search for i
 
 A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, `music`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2, in this case. That can be pipped into whatever you want or copied to open it up.
 
-For examaple, open a file with xdg-open.
+For example, open a file with xdg-open.
 
 `xdg-open $(imt find)`
 
@@ -78,11 +78,17 @@ To jump to test info, see [here](#test).
 
 ### Global address
 
-All files have a bitcoin (global) address. The user supplies their own private keys or mnemonic. Bitcoin can be interchanged with something else, such as Ethereum. A user can even avoid supplying immutag with private info if they don't mind manually entering bitcoin addresses from their wallets. The idea is to make it work with one of those hardware wallets as well. At the moment, various low-fee and reliable bitcoin forks are the target.
+All files have a bitcoin (global) address. The user supplies their own public key, private keys or mnemonic. Bitcoin can be interchanged with something else, such as Ethereum. A user can even avoid supplying immutag with private info if they don't mind manually entering bitcoin addresses from their wallets. The idea is to make it work with one of those hardware wallets as well. At the moment, various low-fee and reliable bitcoin forks are the target.
 
 ### Distribution and sharing
 
 The files are discoverable on a distributed file network created with git-annex, but ipfs or something else can be used. Again, everything can be kept as local as the user wants and can be kept offline. The files are found by author created tags and metadata. Anyone can copy files (i.e., forking) that are pushed to the internet and create their own tags, but the chronology will always show who was the early author.
+
+If pushed to a distributed ledger:
+
+`imt push <distributed-ledger>`
+
+each immutag address records a message stating it's an immutag address and what version of the protocol it's using. The only other messages (unless the protocol is updated) will be the content-addressable hash (versions) of the file-list. When a user fetches the data from the distributed-ledger, it only needs the single content-addressable hash to immutably build all the metadata and files. That way only the bare-minimum has to be pushed to a distributed ledger. All the data is pulled from a distributed file network, such as ipfs. As few or much of the versions (content addresses) can be pushed to the ledger.
 
 ### Versioning
 
@@ -96,7 +102,7 @@ A user can roll the state of immutag backwards and forward and also show the gen
 
 `imt rollfoward [generation]`
 
-Remember, immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from file list. immutag automatically records the store's hash on each tagging operation.
+immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from file list. immutag automatically records the store's hash on each tagging operation to the file-list header.
 
 ### Directory and file structure
 
@@ -117,27 +123,37 @@ $HOME/immutag
         ├── git-annex | but ipfs or other can be dropped in on top.
 ```
 
-#### file-list
-
 The metadata/file-list has the following entries for each tagging operation.
 
-<index> <address> <store-hash> <tags..>
+`<index> <address> <store-hash> <tags..>`
 
 In addition to this, there is a permanent two-line header on the file recording the store's content addressable hash and it's git oid. When immutag rolls backwards or forward, it can then checkout the store's repo at the correct commit height.
 
 ### Use cases
 
-It's excellent for managing media files, such as images, music, and video but it can be used for any files, including software repositories (immutag will flatten them into a single file, likely .tar) before copying it into it's store. Really it can used on any type of files, whether version control is needed or not.
+It's immediately useful for managing your media files, such as images, music, and video. However, it has broad use. For example, it can act as distributed sofware repo if the directory of the repo is flattened into a single file, likely .tar before getting copied into it's store. Really it can used on any type of files, whether version control is needed or not.
+
+Other possibilities:
+
+* Web app and software distribution.
+
+* Distributed software repo hosting.
+
+* Package management.
+
+* Archive services.
+
+There all sorts of other uses cases that are yet envisioned.
 
 ## Test
 
 Setup, run, and teardown tests
 
-`test/.script.sh hard-start`
+`test/.<script> hard-start`
 
 For a faster dev and test cycle, run against an already running container from `hard-start`.
 
-`test/.script.sh`
+`test/.<script>`
 
 
 ## Useful info
