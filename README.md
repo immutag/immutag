@@ -26,6 +26,10 @@ Add a music file with tags that can be used to find it later.
 
 1Akbr is the is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
 
+Finalize changes.
+
+`imt commit`
+
 Since we likely won't remember the long global file address, we can search for it by tag or metadata.
 
 `imt find`
@@ -84,7 +88,17 @@ The files are discoverable on a distributed file network created with git-annex,
 
 Every file version can be cryptographically reconstructed. The local file store uses git-annex. That also gives the user a distributed versioned file system and sharing. There are plans to make ipfs work out-of-the-box, but developers can drop-it-in on their own. The metadata and tags are stored locally on a single file. It's versioned with git. That means any updates to the tags or metadata can be cryptographically mapped to a specific version of the file (remember, it's on git-annex).
 
-### Directory structure
+A user can roll the state of immutag backwards and forward and also show the generations.
+
+`imt rollback [generation]`
+
+`imt generation`
+
+`imt rollfoward [generation]`
+
+Remember, immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from file list. immutag automatically records the store's hash on each tagging operation.
+
+### Directory and file structure
 
 An immutag directory has the following structure and includes everything needed for immutag to work. The idea is to allow the user to initialize immutag wherever they please on the host filesystem, like with git. It may be best to avoid having a global vs local install system, which adds complications. Perhaps the user just chooses how they want to set it up. If they want a global-like setup, they can earmark a specific immutag directory that will be for systemwide efforts.
 
@@ -95,13 +109,21 @@ $HOME/immutag
 ├── metadata
 │   ├── file-list.txt | Maps globally addressed files to metadata.
 │   ├── .git          | Content hashes found by traversing tree.
-├── files             | Store of globally addressed files.
+├── store             | Store of globally addressed files.
     ├── 17nZVxS
     ├── 1CaKbES
     ├── ...
     ├── .git          | Version and distrubtion via git-annex,
         ├── git-annex | but ipfs or other can be dropped in on top.
 ```
+
+#### file-list
+
+The metadata/file-list has the following entries for each tagging operation.
+
+<index> <address> <store-hash> <tags..>
+
+In addition to this, there is a permanent two-line header on the file recording the store's content addressable hash and it's git oid. When immutag rolls backwards or forward, it can then checkout the store's repo at the correct commit height.
 
 ### Use cases
 
