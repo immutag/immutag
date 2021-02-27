@@ -6,8 +6,8 @@ mnemonic="$2"
 
 mkdir "$dir_path"
 mkdir "$dir_path"/files
-echo "store sha256" > "$dir_path"/file-list.txt
-echo "\nstore oid:" >> "$dir_path"/file-list.txt
+echo "store sha256: <hash>" > "$dir_path"/file-list.txt
+echo "store oid: <hash>" >> "$dir_path"/file-list.txt
 echo "" >> "$dir_path"/file-list.txt
 
 cd "$dir_path"
