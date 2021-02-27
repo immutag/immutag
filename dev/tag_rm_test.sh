@@ -13,7 +13,7 @@ testEquality() {
     result_bar=$(eval rg 17nZV file-list.txt)
 
     assertEquals "1 1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q foo txt tag1 tag2 tag3" "$result_foo"
-    assertEquals "2 17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr 9" "$result_bar"
+    assertEquals "2 17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr" "$result_bar"
 }
 
 . shunit2
