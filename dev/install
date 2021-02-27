@@ -50,3 +50,4 @@ cp /immutag/dev/_imt_create_wallet_info_file_from_mnemonic.sh $HOME/.local/bin/i
 cp /immutag/dev/_imt_tag_rm.sh $HOME/.local/bin/immutag/_imt_tag_rm
 cp /immutag/dev/_imt_tag_replace.sh $HOME/.local/bin/immutag/_imt_tag_replace
 cp /immutag/dev/_imt_tag_add.sh $HOME/.local/bin/immutag/_imt_tag_add
+cp /immutag/dev/_imt_print_list_only.sh $HOME/.local/bin/immutag/_imt_print_list_only

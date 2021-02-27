@@ -6,7 +6,9 @@ mnemonic="$2"
 
 mkdir "$dir_path"
 mkdir "$dir_path"/files
-touch "$dir_path"/file-list.txt
+echo "store sha256" > "$dir_path"/file-list.txt
+echo "\nstore oid:" >> "$dir_path"/file-list.txt
+echo "" >> "$dir_path"/file-list.txt
 
 cd "$dir_path"
 echo "$mnemonic" | _imt_create_wallet_info_file_from_mnemonic

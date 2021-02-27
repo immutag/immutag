@@ -2,7 +2,7 @@
 
 arg="$1"
 
-output=$(cat file-list.txt | fzf | cut -d " " -f 2)
+output=$(_imt_print_list_only | fzf | cut -d " " -f 2)
 
 if [ "$arg" = "addr" ]; then
     echo "$output"
