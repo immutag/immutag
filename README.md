@@ -24,7 +24,7 @@ Add a music file with tags that can be used to find it later.
 
 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2
 
-1Akbr is the is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
+1Akbr is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
 
 Finalize changes.
 
@@ -62,7 +62,7 @@ docker-compose up -d
 docker exec -it immutag_environment_1 bash
 ```
 
-Once the container is running, you can edit the code base without rebuilding the image. However, if you update the install script, while inside the container in the host mounted directory, you must run:
+Once the container is running, you can edit the code base from the host without rebuilding the image. However, if you update the install script, while inside the container in the host mounted directory, you must run:
 
 `./install`
 
@@ -78,7 +78,7 @@ To jump to test info, see [here](#test).
 
 ### Global address
 
-All files have a bitcoin (global) address. The user supplies their own public key, private keys or mnemonic. Bitcoin can be interchanged with something else, such as Ethereum. A user can even avoid supplying immutag with private info if they don't mind manually entering bitcoin addresses from their wallets. The idea is to make it work with one of those hardware wallets as well. At the moment, various low-fee and reliable bitcoin forks are the target.
+All files have a bitcoin (global) address. The user supplies their own public key, private keys or mnemonic. Bitcoin can be interchanged with something else, such as Ethereum. Various low-fee and reliable bitcoin forks are the targets for the distributed ledger.
 
 ### Distribution and sharing
 
@@ -100,9 +100,9 @@ A user can roll the state of immutag backwards and forward and also show the gen
 
 `imt generation`
 
-`imt rollfoward [generation]`
+`imt rollforward [generation]`
 
-immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from file list. immutag automatically records the store's hash on each tagging operation to the file-list header.
+immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from the file list. immutag automatically records the store's hash on each tagging operation to the file-list header.
 
 ### Directory and file structure
 
@@ -127,7 +127,7 @@ The metadata/file-list has the following entries for each tagging operation.
 
 `<index> <address> <store-hash> <tags..>`
 
-In addition to this, there is a permanent two-line header on the file recording the store's content addressable hash and it's git oid. When immutag rolls backwards or forward, it can then checkout the store's repo at the correct commit height.
+In addition to this, there is a permanent two-line header on the file recording the store's content addressable hash and its git oid. When immutag rolls backwards or forward, it can then checkout the store's repo at the correct commit height.
 
 ### Use cases
 
@@ -181,7 +181,7 @@ Suggestion: to open a file, use xdg-open or some other clever file-opener.
 
 ## Other possibilities
 
-This may open up creating a modular nix type of file management for 'free'. That is immutag can be instantiated in more than one place, like git, if the user is allowed to modify the bin directory with symlinks of their own from the file store. The version of the bin of the bin files can be ascertained from the metadata and searched like any other immutag file. The exact content hashes of each file version can be extracted from git-annex's tree.
+This may open up creating a modular nix type of file management for 'free'. That is immutag can be instantiated in more than one place, like git, if the user is allowed to modify the bin directory with symlinks of their own from the file store. The version of the bin files can be ascertained from the metadata and searched like any other immutag file. The exact content hashes of each file version can be extracted from git-annex's tree.
 
 See how the file store opens up a similar setup as nix. Below is the jq binary symlink relationship (`ls -l`) of jq (a json cli tool) on a system running a nix package manager.
 
