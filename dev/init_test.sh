@@ -12,7 +12,7 @@ testEquality() {
     result_entropy=$(eval cat immutag/wallet_info.json | jq '.entropy_bits')
 
     assertEquals "immutag/file-list.txt" "$result_list"
-    assertEquals "bar" "$result_entropy"
+    assertEquals "256" "$result_entropy"
 }
 
 . shunit2
