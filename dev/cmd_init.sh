@@ -3,6 +3,9 @@
 dir_path="$1"
 mnemonic="$2"
 
+mkdir $HOME/immutag
+
+cd $HOME/immutag
 
 mkdir "$dir_path"
 mkdir "$dir_path"/files
