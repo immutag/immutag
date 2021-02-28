@@ -19,3 +19,7 @@ git init
 cd  files
 git init
 git annex init
+
+# Add new name to config
+
+echo "$dir_path" >> $HOME/.immutag_config
