@@ -1,11 +1,19 @@
 #!/bin/bash
+immutag_path="$HOME/immutag"
 
-arg="$1"
+name="$1"
+find_type="$2"
+
+cd $immutag_path
+cd $name
+
 
 output=$(_imt_print_list_only | fzf | cut -d " " -f 2)
 
-if [ "$arg" = "addr" ]; then
+file_path=$(eval realpath files/"$output")
+
+if [ "$find_type" = "addr" ]; then
     echo "$output"
 else
-    echo "$PWD/files/$output"
+    echo "$file_path"
 fi
