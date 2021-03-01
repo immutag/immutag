@@ -14,7 +14,7 @@ sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test && ./tag_rm_setup_test.sh'
 
 # Run the target test.
-sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/immutag && ./tag_rm_test.sh'
+sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./tag_rm_test.sh'
 
 # Teardown the test.
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
