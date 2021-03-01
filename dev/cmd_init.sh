@@ -9,8 +9,8 @@ cd $HOME/immutag
 
 mkdir "$dir_path"
 mkdir "$dir_path"/files
-echo "store sha256: <hash>" > "$dir_path"/file-list.txt
-echo "store oid: <hash>" >> "$dir_path"/file-list.txt
+echo "store git oid:" > "$dir_path"/file-list.txt
+echo "store git-annex oid:" >> "$dir_path"/file-list.txt
 echo "" >> "$dir_path"/file-list.txt
 
 cd "$dir_path"

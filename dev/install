@@ -55,3 +55,7 @@ cp /immutag/dev/_imt_tag_rm.sh $HOME/.local/bin/immutag/_imt_tag_rm
 cp /immutag/dev/_imt_tag_replace.sh $HOME/.local/bin/immutag/_imt_tag_replace
 cp /immutag/dev/_imt_tag_add.sh $HOME/.local/bin/immutag/_imt_tag_add
 cp /immutag/dev/_imt_print_list_only.sh $HOME/.local/bin/immutag/_imt_print_list_only
+cp /immutag/dev/_imt_print_list_only.sh $HOME/.local/bin/immutag/_imt_print_list_only
+cp /immutag/dev/_imt_update_list_store_hashes.sh $HOME/.local/bin/immutag/_imt_update_list_store_hashes
+
+chmod +x $HOME/.local/bin/immutag/_imt_update_list_store_hashes
