@@ -22,4 +22,9 @@ git annex init
 
 # Add new name to config
 
-echo "$dir_path" >> $HOME/.immutag_config
+in_config="$(eval rg --multiline "${dir_path}\n" $HOME/.immutag_config)"
+if [ "$in_config" ]; then
+    echo "$dir_path already exists"
+else
+    echo "$dir_path" >> $HOME/.immutag_config
+fi
