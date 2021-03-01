@@ -1,20 +1,31 @@
 #!/bin/bash
 
-# $ add file tags...
+# $ add *name* file tags...
+
+immutag_path="$HOME/immutag"
 
 input="$@"
 
-file=$(echo "$input" | cut -d " " -f 1)
+name=$(echo "$input" | cut -d " " -f 1)
+
+file=$(echo "$input" | cut -d " " -f 2)
+file_abs_path=$(eval realpath $file)
 
 fullfilename="$file"
 filename=$(basename "$fullfilename")
 fname="${filename%.*}"
 ext="${filename##*.}"
 
-tags=$(echo "$input" | cut -d " " -f 2-)
+tags=$(echo "$input" | cut -d " " -f 3-)
 metadata=$(echo "$fname" "$ext" "$tags")
 
 echo "$file"
 echo "$metadata"
 
-_imt_print_list_only | _imt_new_index_addr | _imt_append_list "$metadata" | _imt_add_file "$file"
+cd $immutag_path
+cd $name
+
+
+addr=$(eval _imt_print_list_only | _imt_new_index_addr | _imt_append_list "$metadata")
+
+cp "$file_abs_path" files/"$addr"
