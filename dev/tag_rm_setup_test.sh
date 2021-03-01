@@ -15,7 +15,7 @@ testEquality() {
     assertEquals "foo" "$result_foo"
     assertEquals "bar" "$result_bar"
     assertEquals "tag_rm_test.sh" "$result_test"
-    assertEquals "add_tag_test.sh" "$result_test"
+    assertEquals "add_tag_test.sh" "$result_test2"
 }
 
 # Test complaines it can't remove files because they don't exist, but test passes.
