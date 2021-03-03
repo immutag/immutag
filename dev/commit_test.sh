@@ -22,6 +22,14 @@ testEquality() {
 
     assertEquals "update" "$res_foo_commit_msg"
     assertEquals "update" "$res_bar_commit_msg"
+
+    cd files/
+
+    res_foo_commit_msg=$(git show-branch --no-name HEAD)
+    res_bar_commit_msg=$(git show-branch --no-name HEAD~1)
+
+    assertEquals "update" "$res_foo_commit_msg"
+    assertEquals "updat" "$res_bar_commit_msg"
 }
 
 . shunit2
