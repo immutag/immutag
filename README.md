@@ -1,8 +1,8 @@
 # Immutag
 
-An experimental immutable and distributed filesystem that can be searched by tags and other metadata. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
+An experimental immutable and distributed metadata system that can be used to search and fetch files on local and distributed filesystems. Users find files with tags they create. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
 
-Files and tags can be seperately pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin) making them globally discoverable. However, the user can choose to keep all or some of the data offline or on a local network. And file authors can cryptographically prove the authenticity and chronology of their creations.
+Metadata is be seperately pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, the user can choose to keep all or some of the data offline or on a local network. And file authors can cryptographically prove the authenticity and chronology of their creations.
 
 This is a working prototype glued together with bash scripts, but it's modular, functional in style, and tested. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
 
@@ -10,17 +10,17 @@ This is a working prototype glued together with bash scripts, but it's modular, 
 
 ## Example
 
-Initialize an immutag content directory with a bitcoin mnemonic.
+Create an immutag store with a bitcoin mnemonic.
 
-`imt init <dir> <mnemonic>`
+`imt create <store-name> <mnemonic>`
 
-`imt init my-dir "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
+`imt create music "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
 
 Add a music file with tags that can be used to find it later.
 
-`imt add <file> <tags...>`
+`imt add <store-name> <file> <tags...>`
 
-`imt add Vivaldi\ -\ Four\ Seasons.mp3 music vivaldi classical`
+`imt add music Vivaldi\ -\ Four\ Seasons.mp3 music vivaldi classical`
 
 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2
 
@@ -28,7 +28,7 @@ Add a music file with tags that can be used to find it later.
 
 Finalize changes.
 
-`imt commit`
+`imt commit music`
 
 Since we likely won't remember the long global file address, we can search for it by tag or metadata.
 
@@ -48,7 +48,7 @@ Clone this repo, change into it, and then
 
 ```
 docker volume create --name=immutag-cargo-data
-docker build -t immutag:0.0.2 .
+docker build -t immutag:0.0.3 .
 ```
 
 At the moment, the install is for a development environment and not for user distribution.
@@ -86,7 +86,7 @@ The files are discoverable on a distributed file network created with git-annex,
 
 If pushed to a distributed ledger:
 
-`imt push <distributed-ledger>`
+`imt push <store-name> <distributed-ledger>`
 
 each immutag address records a message stating it's an immutag address and what version of the protocol it's using. The only other messages (unless the protocol is updated) will be the content-addressable hash (versions) of the file-list. When a user fetches the data from the distributed-ledger, it only needs the single content-addressable hash to immutably build all the metadata and files. That way only the bare-minimum has to be pushed to a distributed ledger. All the data is pulled from a distributed file network, such as ipfs. As few or much of the versions (content addresses) can be pushed to the ledger.
 
@@ -94,19 +94,19 @@ each immutag address records a message stating it's an immutag address and what 
 
 Every file version can be cryptographically reconstructed. The local file store uses git-annex. That also gives the user a distributed versioned file system and sharing. There are plans to make ipfs work out-of-the-box, but developers can drop-it-in on their own. The metadata and tags are stored locally on a single file. It's versioned with git. That means any updates to the tags or metadata can be cryptographically mapped to a specific version of the file (remember, it's on git-annex).
 
-A user can roll the state of immutag backwards and forward and also show the generations.
+A user can roll the state of immutag backwards and forwards and list the generations.
 
-`imt rollback [generation]`
+`imt rollback <store-name>`
 
-`imt generation`
+`imt list-generations <store-name>`
 
-`imt rollforward [generation]`
+`imt rollforward <store-name>`
 
 immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from the file list. immutag automatically records the store's hash on each tagging operation to the file-list header.
 
 ### Directory and file structure
 
-An immutag directory has the following structure and includes everything needed for immutag to work. The idea is to allow the user to initialize immutag wherever they please on the host filesystem, like with git. It may be best to avoid having a global vs local install system, which adds complications. Perhaps the user just chooses how they want to set it up. If they want a global-like setup, they can earmark a specific immutag directory that will be for systemwide efforts.
+An immutag directory has the following structure and includes everything needed for immutag to work.
 
 ```
 $HOME/immutag
@@ -123,11 +123,23 @@ $HOME/immutag
         ├── git-annex | but ipfs or other can be dropped in on top.
 ```
 
+## File list: this metadata
 The metadata/file-list has the following entries for each tagging operation.
+
 
 `<index> <address> <store-hash> <tags..>`
 
-In addition to this, there is a permanent two-line header on the file recording the store's content addressable hash and its git oid. When immutag rolls backwards or forward, it can then checkout the store's repo at the correct commit height.
+Default content-address headers are below. (Future versions will allow the user to easily add other content-addresses).
+
+```
+sha256: <sha256>
+ipfs <version>: <ipfs-addr>
+git-annex <version>: <commit-master> <commit-git-annex>
+```
+
+Each line can have as many hashes as is needed. For example, in addition to git-annex oid, it's useful to include the git-annex metadata oid.
+
+Rollbacks are enabled with git-annex. Remember, each generation of the file list also contains the store's sha256 and ipfs addr.
 
 ### Use cases
 
@@ -186,3 +198,19 @@ This may open up creating a modular nix type of file management for 'free'. That
 See how the file store opens up a similar setup as nix. Below is the jq binary symlink relationship (`ls -l`) of jq (a json cli tool) on a system running a nix package manager.
 
 lrwxrwxrwx 1 7db9a wheel 61 Dec 31  1969 /nix/store/q4q25qih2ychclzggwhw715p7v3jbn9g-user-environment/bin/jq -> /nix/store/hjcxlrdbw1v07y4wp19vm5k1i3l1l5bz-jq-1.6-bin/bin/jq
+
+## Notes
+
+Metadata (file list) and data (store) should be seperate. The file list should have all the relevant store hashes. That way there is a single point of entry from a file address.
+
+```
+ledger:
+    address:
+       ipfs-address ----> store's ipfs-address and sha256
+       sha256       ----> verify store.
+```
+The user can then fetch the metadata from that. From the metadata, the hashes of the the store can be found.
+
+There is no way to convert an ipfs hash directly from a sha256. ipfs chunks the files in a particular way. Additionally, there's nothing preventing different ipfs versions from chunking differently.
+
+https://www.reddit.com/r/ipfs/comments/6qw39w/convert_sha256_to_ipfs_hash/
