@@ -8,5 +8,5 @@ cd $name
 
 
 imt_commit_store
-_imt_update_list_store_hashes
+_imt_update_list_store_hashes $name
 imt_commit_list
