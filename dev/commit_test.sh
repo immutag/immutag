@@ -30,6 +30,17 @@ testEquality() {
 
     assertEquals "update" "$res_foo_commit_msg"
     assertEquals "update" "$res_bar_commit_msg"
+
+    addresses=$(cat ../store-addresses | jq '.git_annex.addr')
+    address_1=$(echo "$addresses" | cut -d ' ' -f 1 | sed 's/"//g')
+    address_2=$(echo "$addresses" | cut -d ' ' -f 2 | sed 's/"//g')
+
+    gitrev_oids=$(git rev-parse HEAD git-annex)
+    gitrev_oid1=$(echo "$gitrev_oids" | sed -n '1p')
+    gitrev_oid2=$(echo "$gitrev_oids" | sed -n '2p')
+
+    assertEquals "$gitrev_oid1" "$address_1"
+    assertEquals "$gitrev_oid2" "$address_2"
 }
 
 . shunit2
