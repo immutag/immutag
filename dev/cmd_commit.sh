@@ -10,3 +10,5 @@ cd $name
 imt_commit_store
 _imt_update_list_store_hashes $name
 imt_commit_list
+# Only does so if checked out from a rollback or rollforward.
+_imt_exit_checkout
