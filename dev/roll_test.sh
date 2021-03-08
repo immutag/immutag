@@ -80,6 +80,13 @@ testEquality() {
     gitrev_oid_b_store_3=$(echo "$gitrev_oids_store_3" | sed -n '2p')
 
     assertEquals "$gitrev_oid_a_store_3" "$gitrev_oid_a_store_1"
+
+    ## Rollforward
+    imt_rollforward "$name"
+    gitrev_oids_store_4=$(git rev-parse HEAD git-annex)
+    gitrev_oid_a_store_4=$(echo "$gitrev_oids_store_4" | sed -n '1p')
+    gitrev_oid_b_store_4=$(echo "$gitrev_oids_store_4" | sed -n '2p')
+    assertEquals "$gitrev_oid_a_store_4" "$gitrev_oid_a_store_3"
 }
 
 . shunit2
