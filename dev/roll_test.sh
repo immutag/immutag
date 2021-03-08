@@ -79,7 +79,7 @@ testEquality() {
     gitrev_oid_a_store_3=$(echo "$gitrev_oids_store_3" | sed -n '1p')
     gitrev_oid_b_store_3=$(echo "$gitrev_oids_store_3" | sed -n '2p')
 
-    assertEquals "$gitrev_oid_a_store_3" = "$gitrev_oid_a_store_2"
+    assertEquals "$gitrev_oid_a_store_3" "$gitrev_oid_a_store_1"
 }
 
 . shunit2
