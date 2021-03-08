@@ -5,14 +5,17 @@ oneTimeSetUp() {
 
     echo "foo" > foo.txt
     echo "bar" > bar.txt
+    echo "foofoo" > foofoo.txt
 }
 
 testEquality() {
     result_foo=$(eval cat foo.txt)
     result_bar=$(eval cat bar.txt)
+    result_foofoo=$(eval cat foofoo.txt)
     result_test=$(eval ls roll_test.sh)
     assertEquals "foo" "$result_foo"
     assertEquals "bar" "$result_bar"
+    assertEquals "bar" "$result_foofoo"
     assertEquals "roll_test.sh" "$result_test"
 }
 

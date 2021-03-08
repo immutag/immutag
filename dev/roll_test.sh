@@ -9,6 +9,7 @@ testEquality() {
     immutag_path="$HOME/immutag"
     name="main"
 
+    original_path=$(eval echo "$PWD")
     imt_add "$name" foo.txt tag1 tag2 tag3
 
     ### First commit
@@ -88,6 +89,18 @@ testEquality() {
     gitrev_oid_b_store_4=$(echo "$gitrev_oids_store_4" | sed -n '2p')
     assertEquals "$gitrev_oid_a_store_4" "$gitrev_oid_a_store_2"
     assertEquals "$gitrev_oid_b_store_4" "$gitrev_oid_b_store_2"
+
+    imt_rollback "$name"
+
+    cd "$original_path"
+
+    imt_add "$name" foofoo.txt tag
+    ## Brake out of rollbacked state.
+    imt_commit "$name"
+
+    branch_res=$(git symbolic-ref --short HEAD)
+
+    assertEquals "$branch_res" "main"
 }
 
 . shunit2
