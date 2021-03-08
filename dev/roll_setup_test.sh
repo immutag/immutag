@@ -15,7 +15,7 @@ testEquality() {
     result_test=$(eval ls roll_test.sh)
     assertEquals "foo" "$result_foo"
     assertEquals "bar" "$result_bar"
-    assertEquals "bar" "$result_foofoo"
+    assertEquals "foofoo" "$result_foofoo"
     assertEquals "roll_test.sh" "$result_test"
 }
 

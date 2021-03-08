@@ -17,4 +17,4 @@ sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test && ./ro
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./roll_test.sh'
 
 # Teardown the test.
-#sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
+sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'

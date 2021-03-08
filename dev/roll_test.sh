@@ -98,9 +98,12 @@ testEquality() {
     ## Brake out of rollbacked state.
     imt_commit "$name"
 
+    cd "$immutag_path"
+    cd "$name"
+
     branch_res=$(git symbolic-ref --short HEAD)
 
-    assertEquals "$branch_res" "main"
+    assertEquals "$branch_res" "master"
 }
 
 . shunit2
