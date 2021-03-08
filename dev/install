@@ -47,6 +47,7 @@ cp /immutag/dev/cmd_commit.sh $HOME/.local/bin/immutag/imt_commit
 cp /immutag/dev/cmd_rollback.sh $HOME/.local/bin/immutag/imt_rollback
 cp /immutag/dev/cmd_rollforward.sh $HOME/.local/bin/immutag/imt_rollforward
 cp /immutag/dev/cmd_gen_hash.sh $HOME/.local/bin/immutag/imt_gen_hash
+cp /immutag/dev/cmd_list_gen_hash.sh $HOME/.local/bin/immutag/imt_list_gen_hash
 
 cp /immutag/dev/_imt_add_file.sh $HOME/.local/bin/immutag/_imt_add_file
 cp /immutag/dev/_imt_append_list.sh $HOME/.local/bin/immutag/_imt_append_list
