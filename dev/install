@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+running_in_docker() {
+   awk -F/'$2 == "docker"' /proc/1/cgroup | read
+}
+
+running_in_docker
+
 mkdir -p -m 0755 $HOME/.local/bin
 mkdir -m 0755 $HOME/.local/bin/immutag
 
@@ -23,16 +29,7 @@ cp /immutag/dev/init_test.sh /root/immutag_test/
 cp /immutag/dev/commit_test.sh /root/immutag_test/
 cp /immutag/dev/roll_test.sh /root/immutag_test/
 
-chmod +x /root/immutag_test/add_file_setup_test.sh
-chmod +x /root/immutag_test/add_tag_setup_test.sh
-chmod +x /root/immutag_test/teardown_test.sh
-chmod +x /root/immutag_test/add_file_test.sh
-chmod +x /root/immutag_test/add_tag_test.sh
-chmod +x /root/immutag_test/tag_rm_test.sh
-chmod +x /root/immutag_test/tag_replace_test.sh
-chmod +x /root/immutag_test/init_setup_test.sh
-chmod +x /root/immutag_test/commit_setup_test.sh
-chmod +x /root/immutag_test/roll_setup_test.sh
+chmod +x /root/immutag_test/*
 
 cp /immutag/dev/cmd_add.sh $HOME/.local/bin/immutag/imt_add
 cp /immutag/dev/cmd_init.sh $HOME/.local/bin/immutag/imt_init
@@ -70,4 +67,4 @@ cp /immutag/dev/_imt_update_list_store_hashes.sh $HOME/.local/bin/immutag/_imt_u
 cp /immutag/dev/_imt_write_store_addrs.sh $HOME/.local/bin/immutag/_imt_write_store_addrs
 cp /immutag/dev/_imt_exit_checkout.sh $HOME/.local/bin/immutag/_imt_exit_checkout
 
-chmod +x $HOME/.local/bin/immutag/_imt_update_list_store_hashes
+chmod +x $HOME/.local/bin/immutag/*
