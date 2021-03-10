@@ -12,6 +12,7 @@ mkdir -m 0755 $HOME/.local/bin/immutag
 mkdir /root/immutag_test/
 
 # Copy test script into container's appropriate dir because shunit won't allow test script to change directory.
+cp /immutag/dev/add_setup_test.sh /root/immutag_test/
 cp /immutag/dev/teardown_test.sh /root/immutag_test/
 cp /immutag/dev/add_file_setup_test.sh /root/immutag_test/
 cp /immutag/dev/add_tag_setup_test.sh /root/immutag_test/
@@ -21,6 +22,7 @@ cp /immutag/dev/init_setup_test.sh /root/immutag_test/
 cp /immutag/dev/commit_setup_test.sh /root/immutag_test/
 cp /immutag/dev/roll_setup_test.sh /root/immutag_test/
 
+cp /immutag/dev/add_test.sh /root/immutag_test/
 cp /immutag/dev/add_file_test.sh /root/immutag_test/
 cp /immutag/dev/add_tag_test.sh /root/immutag_test/
 cp /immutag/dev/tag_rm_test.sh /root/immutag_test/

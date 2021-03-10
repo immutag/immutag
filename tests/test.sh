@@ -24,5 +24,3 @@ sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$
 
 # Teardown the test.
 sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
-
-sudo docker exec immutag_environment_1 /bin/sh -c 'chmod u+x /immutag/dev/install'
