@@ -4,7 +4,7 @@
 
 immutag_path="$HOME/immutag"
 
-input="$@"
+input="$*"
 
 name=$(echo "$input" | cut -d " " -f 1)
 
