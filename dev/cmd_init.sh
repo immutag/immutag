@@ -16,7 +16,11 @@ echo "" >> "$dir_path"/file-list.txt
 cd "$dir_path" || exit
 echo "$mnemonic" | _imt_create_wallet_info_file_from_mnemonic
 git init
+git config user.email "immutag"
+git config user.name "immutag"
 cd  files || exit
+git config user.email "immutag"
+git config user.name "immutag"
 git init
 git annex init
 
