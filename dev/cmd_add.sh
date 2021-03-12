@@ -19,8 +19,8 @@ ext="${filename##*.}"
 tags=$(echo "$input" | cut -d " " -f 3-)
 metadata=$(echo "$fname" "$ext" "$tags")
 
-echo "$file"
-echo "$metadata"
+echo "add file: $file"
+echo "tags: $metadata"
 
 cd "$immutag_path" || exit
 cd "$name" || exit
