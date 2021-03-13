@@ -60,5 +60,6 @@ cp /immutag/dev/_imt_print_list_only.sh $HOME/.local/bin/immutag/_imt_print_list
 cp /immutag/dev/_imt_update_list_store_hashes.sh $HOME/.local/bin/immutag/_imt_update_list_store_hashes
 cp /immutag/dev/_imt_write_store_addrs.sh $HOME/.local/bin/immutag/_imt_write_store_addrs
 cp /immutag/dev/_imt_exit_checkout.sh $HOME/.local/bin/immutag/_imt_exit_checkout
+cp /immutag/dev/_imt_commit.sh $HOME/.local/bin/immutag/_imt_commit
 
 chmod +x $HOME/.local/bin/immutag/*

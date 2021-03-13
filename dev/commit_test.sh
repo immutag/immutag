@@ -10,9 +10,9 @@ testEquality() {
     name="main"
 
     imt_add "$name" foo.txt tag1 tag2 tag3
-    imt_commit "$name"
+    _imt_commit "$name"
     imt_add "$name" bar.txt tag1 tag2 tag3
-    imt_commit "$name"
+    _imt_commit "$name"
 
     cd "$immutag_path"
     cd "$name"
