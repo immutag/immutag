@@ -6,7 +6,7 @@ immutag_path="$HOME/immutag"
 cd $immutag_path
 cd $name
 
-git checkout HEAD~1
+git checkout HEAD~1 > /dev/null 2>&1
 
 # Get git annex branch oids off of rolled back file list, and then checkout those out
 store_oids=$(cat store-addresses | jq '.git_annex.addr')
@@ -17,7 +17,7 @@ oid_2=$(echo "$store_oids" | cut -d ' ' -f 2 | sed 's/"//g')
 cd files/
 
 # We can't rollback the git-annex branch also, but if we do make the changes permanent, we can.
-git checkout HEAD~1
+git checkout HEAD~1 > /dev/null 2>&1
 
 #echo "$oid_1"
 #echo "$oid_2"
