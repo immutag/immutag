@@ -29,3 +29,5 @@ cd "$name" || exit
 addr=$(eval _imt_print_list_only | _imt_new_index_addr | _imt_append_list "$metadata")
 
 cp "$file_abs_path" files/"$addr"
+
+_imt_commit "$name"
