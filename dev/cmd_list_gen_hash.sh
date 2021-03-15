@@ -2,6 +2,8 @@
 
 name="$1"
 
+initial_oids_store=$(git rev-parse HEAD git-annex 2> /dev/null)
+
 while :
 do
 
@@ -55,6 +57,17 @@ immutag_path="$HOME/immutag"
 cd "$immutag_path" || exit
 cd "$name" || exit
 
-_imt_exit_checkout > /dev/null 2>&1
-
-echo "$gitrev_oids_store_1"
+# If we we're initiall in a rollbacked state, we go back to it.
+final_oids_store=$(git rev-parse HEAD git-annex 2> /dev/null)
+if [ "$final_oids_store" != "$initial_oids_store" ];then
+    while :
+    do
+        imt_rollback "$name" > /dev/null 2>&1
+        final_oids_store=$(git rev-parse HEAD git-annex 2> /dev/null)
+        if [ "$final_oids_store" = "$initial_oids_store" ];then
+            break
+        fi
+    done
+else
+    _imt_exit_checkout > /dev/null 2>&1
+fi
