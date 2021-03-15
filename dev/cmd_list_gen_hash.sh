@@ -5,11 +5,11 @@ name="$1"
 while :
 do
 
-        gitrev_oids_store_1=$(git rev-parse HEAD git-annex > /dev/null 2>&1)
+        gitrev_oids_store_1=$(git rev-parse HEAD git-annex 2> /dev/null)
         gitrev_oid_a_store_1=$(echo "$gitrev_oids_store_1" | sed -n '1p')
         gitrev_oid_b_store_1=$(echo "$gitrev_oids_store_1" | sed -n '2p')
         imt_rollforward "$name" > /dev/null 2>&1
-	gitrev_oids_store_2=$(git rev-parse HEAD git-annex > /dev/null 2>&1)
+	gitrev_oids_store_2=$(git rev-parse HEAD git-annex 2> /dev/null)
         gitrev_oid_a_store_2=$(echo "$gitrev_oids_store_2" | sed -n '1p')
         gitrev_oid_b_store_2=$(echo "$gitrev_oids_store_2" | sed -n '2p')
 
@@ -36,11 +36,11 @@ done
 while :
 do
 
-        gitrev_oids_store_1=$(git rev-parse HEAD git-annex > /dev/null 2>&1)
+        gitrev_oids_store_1=$(git rev-parse HEAD git-annex 2> /dev/null)
         gitrev_oid_a_store_1=$(echo "$gitrev_oids_store_1" | sed -n '1p')
         gitrev_oid_b_store_1=$(echo "$gitrev_oids_store_1" | sed -n '2p')
         imt_rollforward "$name" > /dev/null 2>&1
-	gitrev_oids_store_2=$(git rev-parse HEAD git-annex > /dev/null 2>&1)
+	gitrev_oids_store_2=$(git rev-parse HEAD git-annex 2> /dev/null)
         gitrev_oid_a_store_2=$(echo "$gitrev_oids_store_2" | sed -n '1p')
         gitrev_oid_b_store_2=$(echo "$gitrev_oids_store_2" | sed -n '2p')
 
@@ -56,3 +56,5 @@ cd "$immutag_path" || exit
 cd "$name" || exit
 
 _imt_exit_checkout > /dev/null 2>&1
+
+echo "$gitrev_oids_store_1"
