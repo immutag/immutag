@@ -58,6 +58,9 @@ if [ "$cmd" = "test" ];then
     echo "SEARCH PATH     = ${SEARCHPATH}"
     echo "LIBRARY PATH    = ${LIBPATH}"
     echo "DEFAULT         = ${DEFAULT}"
+
+    addr="$2"
+    echo -e "\naddress: $addr"
 fi
 
 #echo "Number files in SEARCH PATH with EXTENSION:" $("${SEARCHPATH}"/*."${EXTENSION}") if [[ -n $1 ]]; then echo "Last line of file specified as non-opt/last argument:" tail -1 "$1" fi
