@@ -18,6 +18,55 @@ if [ "$cmd" = "add" ];then
 	imt_add "$storename" "$filepath" "$tags"
 fi
 
+if [ "$cmd" = "find" ];then
+    storename="$2"
+    if [ ! $# -eq 3 ];then
+        imt_find "$storename"
+    fi
+    while [ ! $# -eq 0 ]
+    do
+        case "$1" in
+            --help | -h)
+                #helpmenu
+                    echo -e "\nhelp\n"
+                exit
+                ;;
+            --addr | -a)
+                    storename="$2"
+                    imt_find "$storename" addr
+                exit
+                ;;
+        esac
+        shift
+    done
+
+    #POSITIONAL=()
+    #while [[ $# -gt 0 ]]
+    #do
+    #key="$1"
+
+    #case $key in
+    #    -a|--address)
+    #    ADDRESS="$2"
+    #    shift # past argument
+    #    ;;
+    #    *)    # unknown option
+    #    POSITIONAL+=("$1") # save it in an array for later
+    #    shift # past argument
+    #    ;;
+    #esac
+    #done
+    #set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    #storename="$2"
+
+    #if [ -z "${ADDRESS}" ]; then
+    #     imt_find "$storename"
+    #else
+    #     imt_find "$storename" addr
+    #fi
+fi
+
 
 if [ "$cmd" = "test" ];then
 
@@ -63,4 +112,17 @@ if [ "$cmd" = "test" ];then
     echo -e "\naddress: $addr"
 fi
 
-#echo "Number files in SEARCH PATH with EXTENSION:" $("${SEARCHPATH}"/*."${EXTENSION}") if [[ -n $1 ]]; then echo "Last line of file specified as non-opt/last argument:" tail -1 "$1" fi
+#usage()
+#{
+#cat << EOF
+#usage: $0 PARAM [-o|--option OPTION] [-f|--force] [-h|--help]
+#
+#This script does foo.
+#
+#OPTIONS:
+#   PARAM        The param
+#   -o|--option  OPTION The option
+#   -h|--help    Show this message
+#   -f|--force   Enable --force
+#EOF
+#}
