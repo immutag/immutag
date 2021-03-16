@@ -9,8 +9,17 @@ if [ "$cmd" = "create" ];then
 	imt_init "$storename" "$mnemonic"
 fi
 
-
 if [ "$cmd" = "add" ];then
+        input="$*"
+	storename="$2"
+	filepath="$3"
+        tags=$(echo "$input" | cut -d " " -f 3-)
+
+	imt_add "$storename" "$filepath" "$tags"
+fi
+
+
+if [ "$cmd" = "test" ];then
 
     POSITIONAL=()
     while [[ $# -gt 0 ]]
