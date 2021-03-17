@@ -11,6 +11,12 @@ name=$(echo "$input" | cut -d " " -f 1)
 file=$(echo "$input" | cut -d " " -f 2)
 file_abs_path=$(eval realpath "$file")
 
+# Exit script here if we can't find the file to be added to the store.
+if [ ! -f "$file_abs_path" ];then
+    echo "Can't find file."
+    exit
+fi
+
 fullfilename="$file"
 filename=$(basename "$fullfilename")
 fname="${filename%.*}"
