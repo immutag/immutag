@@ -27,6 +27,15 @@ if [ "$cmd" = "add-tag" ];then
 	echo "$fileaddr" | imt_tag_add "$storename" "$tags"
 fi
 
+if [ "$cmd" = "replace-tag" ];then
+        input="$*"
+	storename="$2"
+        fileaddr="$3"
+        tags=$(echo "$input" | cut -d " " -f 4-)
+
+	echo "$fileaddr" | imt_tag_replace "$storename" "$tags"
+fi
+
 if [ "$cmd" = "find" ];then
     storename="$2"
     if [ ! $# -eq 3 ];then
