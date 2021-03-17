@@ -27,14 +27,14 @@ if [ "$cmd" = "add-tag" ];then
 	echo "$fileaddr" | imt_tag_add "$storename" "$tags"
 fi
 
-if [ "$cmd" = "rm-tag" ];then
+if [ "$cmd" = "rm-tags" ];then
         input="$*"
 	storename="$2"
         fileaddr="$3"
 	echo "$fileaddr" | imt_tag_rm "$storename"
 fi
 
-if [ "$cmd" = "replace-tag" ];then
+if [ "$cmd" = "replace-tags" ];then
         input="$*"
 	storename="$2"
         fileaddr="$3"
