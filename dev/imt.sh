@@ -22,7 +22,7 @@ if [ "$cmd" = "add-tag" ];then
         input="$*"
 	storename="$2"
         fileaddr="$3"
-        tags=$(echo "$input" | cut -d " " -f 4-)
+        tags=$(echo "$input" | cut -d " " -f 4)
 
 	echo "$fileaddr" | imt_tag_add "$storename" "$tags"
 fi
