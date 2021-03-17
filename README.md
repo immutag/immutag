@@ -26,21 +26,27 @@ Add a music file with tags that can be used to find it later.
 
 1Akbr is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
 
-Finalize changes.
-
-`imt commit music`
-
-Since we likely won't remember the long global file address, we can search for it by tag or metadata.
-
-`imt find`
+`imt find music`
 
 A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, `music`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2, in this case. That can be pipped into whatever you want or copied to open it up.
 
 For example, open a file with xdg-open.
 
-`xdg-open $(imt find)`
+`xdg-open $(imt find music)`
 
 Actually, the find file menu may appear familiar. It's fzf: a cli utility to find files.
+
+To add a tag to a file already tagged.
+
+`imt add-tag <store-name> <file-addr> <tags...>`
+
+So for example to add the tag 'name=four-seasons' to our vivaldi four seasons song:
+
+`imt add-tag music "$(imt find --address main)" name=four-seasons
+
+If we happen to remember the name, we can just search
+
+`name=four-seasons` or something thereabouts with `imt find music`
 
 ## Install (dev)
 
