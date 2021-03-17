@@ -117,9 +117,10 @@ An immutag directory has the following structure and includes everything needed 
 ```
 $HOME/immutag
 ├── account
-│   ├── wallet_info.json| Bitcoin wallet seed, including mnemonic.
+│   ├── wallet-info| Bitcoin wallet seed, including mnemonic.
 ├── metadata
-│   ├── file-list.txt | Maps globally addressed files to metadata.
+│   ├── entries       | The tags of the files.
+│   ├── store-snapshot| Cryptographic snapshot of the files store.
 │   ├── .git          | Content hashes found by traversing tree.
 ├── store             | Store of globally addressed files.
     ├── 17nZVxS
