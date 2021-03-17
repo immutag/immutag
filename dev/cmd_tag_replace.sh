@@ -12,3 +12,5 @@ cd $immutag_path
 cd $name
 
 echo "$addr" | _imt_tag_replace file-list.txt "$tags"
+
+_imt_commit "$name"
