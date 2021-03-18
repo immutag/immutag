@@ -17,13 +17,17 @@ if [ ! -f "$file_abs_path" ];then
     exit
 fi
 
-fullfilename="$file"
-filename=$(basename "$fullfilename")
-fname="${filename%.*}"
-ext="${filename##*.}"
+## To add file name and extension to tag.
+#fullfilename="$file"
+#filename=$(basename "$fullfilename")
+#fname="${filename%.*}"
+#ext="${filename##*.}"
+#
+#tags=$(echo "$input" | cut -d " " -f 3-)
+#metadata=$(echo "$fname" "$ext" "$tags")
 
 tags=$(echo "$input" | cut -d " " -f 3-)
-metadata=$(echo "$fname" "$ext" "$tags")
+metadata=$(echo "$tags")
 
 echo "add file: $file"
 echo "tags: $metadata"
