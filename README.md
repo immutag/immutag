@@ -1,34 +1,46 @@
 # Immutag
 
-An experimental immutable and distributed metadata system that can be used to search and fetch files on local and distributed filesystems. Users find files with tags they create. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
+Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
 
-Metadata is be seperately pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, the user can choose to keep all or some of the data offline or on a local network. And file authors can cryptographically prove the authenticity and chronology of their creations.
+Metadata can be pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, it works well for purely offline use.
+
+The user doesn't need to acquire any bitcoin or tokens or use the bitcoin network if they choose: the can keep all or some of the data offline or on a local network. If the user chooses to make use of bitcoin's network, they can cryptographically prove the authenticity and chronology of their creations.
 
 This is a working prototype glued together with bash scripts, but it's modular, functional in style, and tested. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
 
 **WARNING**: this readme may not always accurately reflect the state of the software as this is a work-in-progress.
 
-## Example
+## Usage and examples
 
-Create an immutag store with a bitcoin mnemonic.
+Again, you dont' need to buy or use bitcoin to make use of most of the features of immutag, so go right ahead and jump in.
+
+**Create an immutag store with a bitcoin mnemonic.**
 
 `imt create <store-name> <mnemonic>`
 
 `imt create music "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
 
-Add a music file with tags that can be used to find it later.
+(You'll need to retreive or generate the mnemonic from elsewhere, such as with you bitcoin wallet app. It should be a wallet specifically designated from immutag use and not have 'money' on it. At the moment, immutag stores the wallet insecurely for development purposes. In the future, immutag will encrypt the wallet in addition to creating api endpoints that can accept bitcoin addresses without the need for storing private keys or mnemonics.)
+
+**Add a music file with tags that can be used to find it later.**
 
 `imt add <store-name> <file> <tags...>`
 
-`imt add music Vivaldi\ -\ Four\ Seasons.mp3 music vivaldi classical`
+`imt add music "vivaldi-four-seasons.mp3" music vivaldi classical`
 
 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2
 
 1Akbr is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
 
+If you don't want to add the original name and extension of the file as tags, then do:
+
+`imt add --no-default-name <store-name> <file> <tags...>`
+
+To find files by tags.
+
 `imt find music`
 
-A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, `music`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2, in this case. That can be pipped into whatever you want or copied to open it up.
+A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2, in this case. That can be pipped into whatever you want or copied to open it up.
 
 For example, open a file with xdg-open.
 
@@ -36,17 +48,24 @@ For example, open a file with xdg-open.
 
 Actually, the find file menu may appear familiar. It's fzf: a cli utility to find files.
 
-To add a tag to a file already tagged.
+**To add a tag to a file already tagged.**
 
 `imt add-tag <store-name> <file-addr> <tags...>`
 
 So for example to add the tag 'name=four-seasons' to our vivaldi four seasons song:
 
-`imt add-tag music "$(imt find --address main)" name=four-seasons
+`imt add-tag music "$(imt find --address main)" name=four-seasons`
 
 If we happen to remember the name, we can just search
 
 `name=four-seasons` or something thereabouts with `imt find music`
+
+**To replace all the tags with new ones for the file.**
+
+`imt replace-tags <file-addr> <tags...>`
+
+You'll select the file from the menu.
+`imt replace-tags $(imt find --address music) renaissance orchestral italy`
 
 ## Install (dev)
 
