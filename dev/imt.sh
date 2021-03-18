@@ -13,7 +13,7 @@ if [ "$cmd" = "add" ];then
         input="$*"
 	storename="$2"
 	filepath="$3"
-        tags=$(echo "$input" | cut -d " " -f 3-)
+        tags=$(echo "$input" | cut -d " " -f 4-)
 
 	imt_add "$storename" "$filepath" "$tags"
 fi
