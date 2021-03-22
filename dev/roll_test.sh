@@ -10,10 +10,9 @@ testEquality() {
     name="main"
 
     original_path=$(eval echo "$PWD")
+    # First add and commit
     imt_add "$name" foo.txt tag1 tag2 tag3
 
-    ### First commit
-    imt_commit "$name"
     cd "$immutag_path"
     cd "$name"
 
@@ -41,10 +40,8 @@ testEquality() {
     # Make sure we can do commands from anywhere.
     cd /root/immutag_test
 
+    ### Second add and commit
     imt_add "$name" bar.txt tag1 tag2 tag3
-
-    ### Second commit
-    imt_commit "$name"
 
     cd "$immutag_path"
     cd "$name"
@@ -94,9 +91,8 @@ testEquality() {
 
     cd "$original_path"
 
-    imt_add "$name" foofoo.txt tag
     ## Brake out of rollbacked state.
-    imt_commit "$name"
+    imt_add "$name" foofoo.txt tag
 
     cd "$immutag_path"
     cd "$name"
