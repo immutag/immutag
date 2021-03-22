@@ -225,6 +225,14 @@ if [ "$cmd" = "test" ];then
     echo -e "\naddress: $addr"
 fi
 
+if [ "$cmd" = "rollback" ];then
+    imt_rollback "$2"
+fi
+
+if [ "$cmd" = "rollforward" ];then
+    imt_rollforward "$2"
+fi
+
 #usage()
 #{
 #cat << EOF
