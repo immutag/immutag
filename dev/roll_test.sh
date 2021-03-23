@@ -100,6 +100,77 @@ testEquality() {
     branch_res=$(git symbolic-ref --short HEAD)
 
     assertEquals "$branch_res" "master"
+
+    ### Replace and commit, which doesn't advance files versioning
+
+    # Get pre-change values.
+    cd files/
+    gitrev_oids_store_5=$(git rev-parse HEAD git-annex)
+    gitrev_oid_a_store_5=$(echo "$gitrev_oids_store_5" | sed -n '1p')
+    gitrev_oid_b_store_5=$(echo "$gitrev_oids_store_5" | sed -n '2p')
+
+    addresses_store_5=$(cat ../store-addresses | jq '.git_annex.addr')
+    address_a_store_5=$(echo "$addresses_store_5" | cut -d ' ' -f 1 | sed 's/"//g')
+    address_b_store_5=$(echo "$addresses_store_5" | cut -d ' ' -f 2 | sed 's/"//g')
+
+    imt replace-tags "$name" 1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q a b c d e f g
+
+    cd "$immutag_path"
+    cd "$name"
+
+    res_foo_commit_msg=$(git show-branch --no-name HEAD)
+    res_bar_commit_msg=$(git show-branch --no-name HEAD~1)
+
+    assertEquals "update" "$res_foo_commit_msg"
+    assertEquals "update" "$res_bar_commit_msg"
+
+    cd files/
+
+    res_foo_commit_msg=$(git show-branch --no-name HEAD)
+    res_bar_commit_msg=$(git show-branch --no-name HEAD~1)
+
+    assertEquals "update" "$res_foo_commit_msg"
+    assertEquals "update" "$res_bar_commit_msg"
+
+    addresses_store_6=$(cat ../store-addresses | jq '.git_annex.addr')
+    address_a_store_6=$(echo "$addresses_store_6" | cut -d ' ' -f 1 | sed 's/"//g')
+    address_b_store_6=$(echo "$addresses_store_6" | cut -d ' ' -f 2 | sed 's/"//g')
+
+    gitrev_oids_store_6=$(git rev-parse HEAD git-annex)
+    gitrev_oid_a_store_6=$(echo "$gitrev_oids_store_6" | sed -n '1p')
+    gitrev_oid_b_store_6=$(echo "$gitrev_oids_store_6" | sed -n '2p')
+
+    # Should be the same since metadata change in replace-tags doesn't effect files.
+    assertEquals "$gitrev_oid_a_store_6" "$gitrev_oid_a_store_5"
+    assertEquals "$gitrev_oid_b_store_6" "$gitrev_oid_b_store_5"
+
+    ## Files never changed because replace-tags command only effects metadata.
+    assertEquals "$gitrev_oid_a_store_6" "$address_a_store_5"
+    assertEquals "$gitrev_oid_b_store_6" "$address_b_store_5"
+
+    imt_rollback "$name"
+
+    cd "$immutag_path"
+    cd "$name"
+
+    ### Replace and commit, which doesn't advance files versioning
+
+    # Get pre-change values.
+    cd files/
+    gitrev_oids_store_7=$(git rev-parse HEAD git-annex)
+    gitrev_oid_a_store_7=$(echo "$gitrev_oids_store_7" | sed -n '1p')
+    gitrev_oid_b_store_7=$(echo "$gitrev_oids_store_7" | sed -n '2p')
+
+    addresses_store_7=$(cat ../store-addresses | jq '.git_annex.addr')
+    address_a_store_7=$(echo "$addresses_store_7" | cut -d ' ' -f 1 | sed 's/"//g')
+    address_b_store_7=$(echo "$addresses_store_7" | cut -d ' ' -f 2 | sed 's/"//g')
+
+    assertEquals "$gitrev_oid_a_store_6" "$gitrev_oid_a_store_7"
+    assertEquals "$gitrev_oid_b_store_6" "$gitrev_oid_b_store_7"
+
+    ## Files never changed because replace-tags command only effects metadata.
+    assertEquals "$gitrev_oid_a_store_6" "$address_a_store_7"
+    assertEquals "$gitrev_oid_b_store_6" "$address_b_store_7"
 }
 
 . shunit2
