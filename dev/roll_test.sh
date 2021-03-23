@@ -5,6 +5,9 @@
 #	imt_add bar.txt tag1 tag2 tag3
 #}
 
+# Tests rollback and rollforward.
+# Also tests that non-file changing operations, such as replace-tags,
+# doesn't effect files generations.
 testEquality() {
     immutag_path="$HOME/immutag"
     name="main"
