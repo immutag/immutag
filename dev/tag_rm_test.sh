@@ -9,8 +9,8 @@ testEquality() {
     immutag_path="$HOME/immutag"
     name="main"
 
-    imt add --no-default-name "$name" foo.txt tag1 tag2 tag3
-    imt add --no-default-name "$name" bar.txt tag1 tag2 tag3
+    imt add --no-default-name foo.txt tag1 tag2 tag3
+    imt add --no-default-name bar.txt tag1 tag2 tag3
 
     imt rm-tags "$name" "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr"
 

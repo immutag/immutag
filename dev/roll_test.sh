@@ -14,7 +14,7 @@ testEquality() {
 
     original_path=$(eval echo "$PWD")
     # First add and commit
-    imt add --no-default-name "$name" foo.txt tag1 tag2 tag3
+    imt add --no-default-name foo.txt tag1 tag2 tag3
 
     cd "$immutag_path"
     cd "$name"
@@ -44,7 +44,7 @@ testEquality() {
     cd /root/immutag_test
 
     ### Second add and commit
-    imt add --no-default-name "$name" bar.txt tag1 tag2 tag3
+    imt add --no-default-name bar.txt tag1 tag2 tag3
 
     cd "$immutag_path"
     cd "$name"
@@ -95,7 +95,7 @@ testEquality() {
     cd "$original_path"
 
     ## Brake out of rollbacked state.
-    imt add --no-default-name "$name" foofoo.txt tag
+    imt add --no-default-name foofoo.txt tag
 
     cd "$immutag_path"
     cd "$name"
