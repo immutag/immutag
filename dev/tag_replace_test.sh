@@ -1,16 +1,16 @@
 #! /bin/sh
 
 #oneTimeSetup() {
-#	imt_add foo.txt tag1 tag2 tag3
-#	imt_add bar.txt tag1 tag2 tag3
+#	imt add --no-default-name foo.txt tag1 tag2 tag3
+#	imt add --no-default-name bar.txt tag1 tag2 tag3
 #}
 
 testEquality() {
     immutag_path="$HOME/immutag"
     name="main"
 
-    imt_add "$name" foo.txt tag1 tag2 tag3
-    imt_add "$name" bar.txt tag1 tag2 tag3
+    imt add --no-default-name "$name" foo.txt tag1 tag2 tag3
+    imt add --no-default-name "$name" bar.txt tag1 tag2 tag3
 
     echo "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr" | imt_tag_replace "$name" tagA tagB tagC
 
