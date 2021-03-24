@@ -185,14 +185,17 @@ There all sorts of other uses cases that are yet envisioned.
 
 ## Test
 
-Setup, run, and teardown tests
+Make sure you are in the `tests/` directory before running tests, otherwise tests will fail.
 
-`test/.<script> hard-start`
+**Run all tests**
 
-For a faster dev and test cycle, run against an already running container from `hard-start`.
+`./test_all.sh`
 
-`test/.<script>`
+**Run specific test**
 
+./test.sh hard-start <test-name>
+
+See `test_all.sh` for a list of tests.
 
 ## Useful info
 
