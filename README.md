@@ -4,7 +4,7 @@ Immutag is an experimental content-addressable file manager. Users add files wit
 
 Metadata can be pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, it works well for purely offline use.
 
-The user doesn't need to acquire any bitcoin or tokens or use the bitcoin network if they choose: the can keep all or some of the data offline or on a local network. If the user chooses to make use of bitcoin's network, they can cryptographically prove the authenticity and chronology of their creations.
+You don't need to acquire any bitcoin or tokens or use the bitcoin network if you choose. You can keep all or some of the data offline or on a local network. If you choose to make use of bitcoin's network, you can cryptographically prove the authenticity and chronology of your creations.
 
 This is a working prototype glued together with bash scripts, but it's modular, functional in style, and tested. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
 
@@ -66,6 +66,10 @@ If we happen to remember the name, we can just search
 
 You'll select the file from the menu.
 `imt replace-tags $(imt find --address music) renaissance orchestral italy`
+
+**To update a file.**
+
+`imt update-file [--store-name <name>] <file-addr>`
 
 ## Install (dev)
 
