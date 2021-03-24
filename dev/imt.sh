@@ -26,6 +26,11 @@ if [ "$cmd" = "add" ];then
     key="$1"
 
     case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
         --no-default-name)
         NODEFAULTNAME=YES
         shift # past argument
@@ -43,8 +48,13 @@ if [ "$cmd" = "add" ];then
 
         input="$*"
 
-        name="$2"
-	file="$3"
+        if [ -n "${STORENAME}" ];then
+            name="$STORENAME"
+	else
+	    name="main"
+	fi
+
+	file="$2"
         file_abs_path=$(eval realpath "$file")
 
         # Exit script here if we can't find the file to be added to the store.
@@ -53,7 +63,7 @@ if [ "$cmd" = "add" ];then
             exit
         fi
 
-        metadata=$(echo "$input" | cut -d " " -f 4-)
+        metadata=$(echo "$input" | cut -d " " -f 3-)
 
         echo "add file: $file"
         echo "tags: $metadata"
@@ -72,8 +82,13 @@ if [ "$cmd" = "add" ];then
 
         input="$*"
 
-        name="$2"
-	file="$3"
+        if [ -n "${STORENAME}" ];then
+            name="$STORENAME"
+	else
+	    name="main"
+	fi
+
+	file="$2"
         file_abs_path=$(eval realpath "$file")
 
         # Exit script here if we can't find the file to be added to the store.
@@ -88,7 +103,7 @@ if [ "$cmd" = "add" ];then
         fname="${filename%.*}"
         ext="${filename##*.}"
 
-        tags=$(echo "$input" | cut -d " " -f 4-)
+        tags=$(echo "$input" | cut -d " " -f 3-)
         metadata=$(echo "$fname" "$ext" "$tags")
 
         echo "add file: $file"
