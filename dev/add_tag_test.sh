@@ -12,8 +12,8 @@ testEquality() {
     imt add --no-default-name "$name" foo.txt tag1 tag2 tag3
     imt add --no-default-name "$name" bar.txt tag1 tag2 tag3
 
-    echo "1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q" | imt_tag_add "$name" tag4 tag5 tag6 tag7
-    echo "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr" | imt_tag_add "$name" tag4 tag5
+    imt add-tag "$name" "1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q" tag4 tag5 tag6 tag7
+    imt add-tag "$name" "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr" tag4 tag5
 
     cd "$immutag_path"
     cd "$name"
