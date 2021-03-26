@@ -339,11 +339,43 @@ if [ "$cmd" = "test" ];then
 fi
 
 if [ "$cmd" = "rollback" ];then
-    imt_rollback "$2"
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    imt_rollback "$storename"
 fi
 
+
 if [ "$cmd" = "rollforward" ];then
-    imt_rollforward "$2"
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    imt_rollforward "$storename"
 fi
 
 #usage()
