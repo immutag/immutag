@@ -180,10 +180,34 @@ if [ "$cmd" = "add-tag" ];then
 fi
 
 if [ "$cmd" = "rm-tags" ];then
-        input="$*"
-	storename="$2"
-        fileaddr="$3"
-	echo "$fileaddr" | imt_tag_rm "$storename"
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+    input="$*"
+    fileaddr="$2"
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    echo "$fileaddr" | imt_tag_rm "$storename"
 fi
 
 if [ "$cmd" = "replace-tags" ];then
