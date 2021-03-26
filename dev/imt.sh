@@ -246,51 +246,40 @@ fi
 
 if [ "$cmd" = "find" ];then
     storename="$2"
-    if [ ! $# -eq 3 ];then
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        -a|--addr)
+        ADDRESS=YES
+        shift # past argument
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    if [ -n "${ADDRESS}" ];then
+        imt_find "$storename" addr
+    else
         imt_find "$storename"
     fi
-    while [ ! $# -eq 0 ]
-    do
-        case "$1" in
-            --help | -h)
-                #helpmenu
-                    echo -e "\nhelp\n"
-                exit
-                ;;
-            --addr | -a)
-                    storename="$2"
-                    imt_find "$storename" addr
-                exit
-                ;;
-        esac
-        shift
-    done
-
-    #POSITIONAL=()
-    #while [[ $# -gt 0 ]]
-    #do
-    #key="$1"
-
-    #case $key in
-    #    -a|--address)
-    #    ADDRESS="$2"
-    #    shift # past argument
-    #    ;;
-    #    *)    # unknown option
-    #    POSITIONAL+=("$1") # save it in an array for later
-    #    shift # past argument
-    #    ;;
-    #esac
-    #done
-    #set -- "${POSITIONAL[@]}" # restore positional parameters
-
-    #storename="$2"
-
-    #if [ -z "${ADDRESS}" ]; then
-    #     imt_find "$storename"
-    #else
-    #     imt_find "$storename" addr
-    #fi
 fi
 
 
