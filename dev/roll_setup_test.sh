@@ -1,7 +1,7 @@
 #! /bin/sh
 
 oneTimeSetUp() {
-    imt create main "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"
+    imt create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"
 
     echo "foo" > foo.txt
     echo "bar" > bar.txt

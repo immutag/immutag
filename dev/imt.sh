@@ -3,10 +3,35 @@
 cmd="$1"
 
 if [ "$cmd" = "create" ];then
-	storename="$2"
-	mnemonic="$3"
 
-	imt_init "$storename" "$mnemonic"
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    mnemonic="$2"
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    imt_init "$storename" "$mnemonic"
 fi
 
 #if [ "$cmd" = "add" ];then
