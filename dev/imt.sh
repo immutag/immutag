@@ -211,12 +211,37 @@ if [ "$cmd" = "rm-tags" ];then
 fi
 
 if [ "$cmd" = "replace-tags" ];then
-        input="$*"
-	storename="$2"
-        fileaddr="$3"
-        tags=$(echo "$input" | cut -d " " -f 4-)
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
 
-	echo "$fileaddr" | imt_tag_replace "$storename" "$tags"
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    input="$*"
+    fileaddr="$2"
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    tags=$(echo "$input" | cut -d " " -f 3-)
+
+    echo "$fileaddr" | imt_tag_replace "$storename" "$tags"
 fi
 
 if [ "$cmd" = "find" ];then

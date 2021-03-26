@@ -116,7 +116,7 @@ testEquality() {
     address_a_store_5=$(echo "$addresses_store_5" | cut -d ' ' -f 1 | sed 's/"//g')
     address_b_store_5=$(echo "$addresses_store_5" | cut -d ' ' -f 2 | sed 's/"//g')
 
-    imt replace-tags "$name" 1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q a b c d e f g
+    imt replace-tags 1CaKbES6YZY2rm2grufw8gw1URafLdJN8Q a b c d e f g
 
     cd "$immutag_path"
     cd "$name"

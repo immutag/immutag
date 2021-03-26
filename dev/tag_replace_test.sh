@@ -12,7 +12,7 @@ testEquality() {
     imt add --no-default-name foo.txt tag1 tag2 tag3
     imt add --no-default-name bar.txt tag1 tag2 tag3
 
-    imt replace-tags "$name" "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr" tagA tagB tagC
+    imt replace-tags "17nZVxSmir9moZQSAwrPd7r7rRRdNqovGr" tagA tagB tagC
 
     cd "$immutag_path"
     cd "$name"
