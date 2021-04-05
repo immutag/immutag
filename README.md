@@ -1,5 +1,7 @@
 # Immutag
 
+**WARNING**: this readme may not always accurately reflect the state of the software as this is a work-in-progress.
+
 Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
 
 Metadata can be pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, it works well for purely offline use.
@@ -8,7 +10,6 @@ You don't need to acquire any bitcoin or tokens or use the bitcoin network if yo
 
 This is a working prototype glued together with bash scripts, but it's modular, functional in style, and tested. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
 
-**WARNING**: this readme may not always accurately reflect the state of the software as this is a work-in-progress.
 
 ## Usage and examples
 
@@ -16,17 +17,17 @@ Again, you dont' need to buy or use bitcoin to make use of most of the features 
 
 **Create an immutag store with a bitcoin mnemonic.**
 
-`imt create <store-name> <mnemonic>`
+`imt create STORE_NAME MNEMONIC`
 
-`imt create music "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
+`imt create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
 
 (You'll need to retreive or generate the mnemonic from elsewhere, such as with you bitcoin wallet app. It should be a wallet specifically designated from immutag use and not have 'money' on it. At the moment, immutag stores the wallet insecurely for development purposes. In the future, immutag will encrypt the wallet in addition to creating api endpoints that can accept bitcoin addresses without the need for storing private keys or mnemonics.)
 
 **Add a music file with tags that can be used to find it later.**
 
-`imt add <store-name> <file> <tags...>`
+`imt add STORE_NAME FILE TAGS...`
 
-`imt add music "vivaldi-four-seasons.mp3" music vivaldi classical`
+`imt add "vivaldi-four-seasons.mp3" music vivaldi classical`
 
 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2
 
@@ -34,23 +35,23 @@ Again, you dont' need to buy or use bitcoin to make use of most of the features 
 
 If you don't want to add the original name and extension of the file as tags, then do:
 
-`imt add --no-default-name <store-name> <file> <tags...>`
+`imt add --no-default-name STORE_NAME FILE TAGS...`
 
 To find files by tags.
 
-`imt find music`
+`imt find`
 
 A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi`, or `classical` to find it. When you select the one you want, imt will spit out the full file name 1AkbrXgctNNu7VBfSk8XZgCKRAV7HtTcj2, in this case. That can be pipped into whatever you want or copied to open it up.
 
 For example, open a file with xdg-open.
 
-`xdg-open $(imt find music)`
+`xdg-open $(imt find)`
 
 Actually, the find file menu may appear familiar. It's fzf: a cli utility to find files.
 
 **To add a tag to a file already tagged.**
 
-`imt add-tag <store-name> <file-addr> <tags...>`
+`imt add-tag STORE_NAME FILE_ADDR TAGS...`
 
 So for example to add the tag 'name=four-seasons' to our vivaldi four seasons song:
 
@@ -62,14 +63,15 @@ If we happen to remember the name, we can just search
 
 **To replace all the tags with new ones for the file.**
 
-`imt replace-tags <file-addr> <tags...>`
+`imt replace-tags FILE_ADDR TAGS...`
 
 You'll select the file from the menu.
+
 `imt replace-tags $(imt find --address music) renaissance orchestral italy`
 
 **To update a file.**
 
-`imt update-file [--store-name <name>] <file-addr>`
+`imt update [--store-name NAME] FILE_ADDR`
 
 ## Install (dev)
 
@@ -115,9 +117,9 @@ The files are discoverable on a distributed file network created with git-annex,
 
 If pushed to a distributed ledger:
 
-`imt push <store-name> <distributed-ledger>`
+`imt push STORE_NAME LEDGER_NAME
 
-each immutag address records a message stating it's an immutag address and what version of the protocol it's using. The only other messages (unless the protocol is updated) will be the content-addressable hash (versions) of the file-list. When a user fetches the data from the distributed-ledger, it only needs the single content-addressable hash to immutably build all the metadata and files. That way only the bare-minimum has to be pushed to a distributed ledger. All the data is pulled from a distributed file network, such as ipfs. As few or much of the versions (content addresses) can be pushed to the ledger.
+each immutag address records a message stating it's an immutag address and what version of the protocol it's using. The only other messages (unless the protocol is updated) will be the content-addressable hash (versions) of the file-list. When a user fetches the data from the distributed-ledger, it only needs the single content-addressable hash to immutably build all the metadata and file. That way only the bare-minimum has to be pushed to a distributed ledger. All the data is pulled from a distributed file network, such as ipfs. As few or much of the versions (content addresses) can be pushed to the ledger.
 
 ### Versioning
 
@@ -125,11 +127,11 @@ Every file version can be cryptographically reconstructed. The local file store 
 
 A user can roll the state of immutag backwards and forwards and list the generations.
 
-`imt rollback <store-name>`
+`imt rollback STORE_NAME`
 
-`imt list-generations <store-name>`
+`imt list-generations STORE_NAME`
 
-`imt rollforward <store-name>`
+`imt rollforward STORE_NAME`
 
 immutag is made up of two version controlled directories: metadata and store. immutag looks up the store hash from the file list. immutag automatically records the store's hash on each tagging operation to the file-list header.
 
@@ -231,6 +233,17 @@ This may open up creating a modular nix type of file management for 'free'. That
 See how the file store opens up a similar setup as nix. Below is the jq binary symlink relationship (`ls -l`) of jq (a json cli tool) on a system running a nix package manager.
 
 lrwxrwxrwx 1 7db9a wheel 61 Dec 31  1969 /nix/store/q4q25qih2ychclzggwhw715p7v3jbn9g-user-environment/bin/jq -> /nix/store/hjcxlrdbw1v07y4wp19vm5k1i3l1l5bz-jq-1.6-bin/bin/jq
+
+
+## Todo
+
+- [ ] Add or update ipfs addr in store-addresses file on each file add or update.
+- [ ] Rollback or forward to when a specific file was changed.
+- [ ] High-level commands to sync files between imt users: `imt rollback --file ADDR`
+- [ ] List generations by specific file: `imt list-generations --file ADDR`
+- [ ] Remove file and tags (address stays): `imt remove-file`
+- [ ] High-level commands to sync metadata and files between users.
+- [ ] Add ipfs support.
 
 ## Notes
 
