@@ -34,6 +34,48 @@ if [ "$cmd" = "create" ];then
     imt_init "$storename" "$mnemonic"
 fi
 
+if [ "$cmd" = "update" ];then
+
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    addr="$2"
+    file="$3"
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    imt_update_file "$storename" "$addr" "$file"
+fi
+
+#if [ "$cmd" = "add" ];then
+#        input="$*"
+#	storename="$2"
+#	filepath="$3"
+#        tags=$(echo "$input" | cut -d " " -f 4-)
+#
+#	imt_add "$storename" "$filepath" "$tags"
+#fi
+
 #if [ "$cmd" = "add" ];then
 #        input="$*"
 #	storename="$2"
