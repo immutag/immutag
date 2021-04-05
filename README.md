@@ -117,7 +117,7 @@ The files are discoverable on a distributed file network created with git-annex,
 
 If pushed to a distributed ledger:
 
-`imt push STORE_NAME LEDGER_NAME
+`imt push STORE_NAME LEDGER_NAME`
 
 each immutag address records a message stating it's an immutag address and what version of the protocol it's using. The only other messages (unless the protocol is updated) will be the content-addressable hash (versions) of the file-list. When a user fetches the data from the distributed-ledger, it only needs the single content-addressable hash to immutably build all the metadata and file. That way only the bare-minimum has to be pushed to a distributed ledger. All the data is pulled from a distributed file network, such as ipfs. As few or much of the versions (content addresses) can be pushed to the ledger.
 
@@ -240,7 +240,7 @@ lrwxrwxrwx 1 7db9a wheel 61 Dec 31  1969 /nix/store/q4q25qih2ychclzggwhw715p7v3j
 - [ ] Add or update ipfs addr in store-addresses file on each file add or update.
 - [ ] Rollback or forward to when a specific file was changed.
 - [ ] High-level commands to sync files between imt users: `imt rollback --file ADDR`
-- [ ] List generations by specific file: `imt list-generations --file ADDR`
+- [ ] List generations by specific file: `imt list-generations --file ADDR`.
 - [ ] Remove file and tags (address stays): `imt remove-file`
 - [ ] High-level commands to sync metadata and files between users.
 - [ ] Add ipfs support.
