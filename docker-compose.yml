@@ -2,11 +2,11 @@ version: "3"
 
 services:
   environment:
-    image: immutag:0.0.2
+    image: immutag:0.0.3
     volumes:
       - ./:/immutag
       - immutag-cargo-data:/usr/local/cargo
-        #- nix-data:/nix
+      - nix-data:/nix
     tty: true
 
 volumes:

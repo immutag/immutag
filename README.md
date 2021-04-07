@@ -75,7 +75,17 @@ You'll select the file from the menu.
 
 ## Install (dev)
 
-Clone this repo, change into it, and then
+Clone this repo
+
+`git clone --recursive -j8 https://github.com/immutag/immutag`
+
+or
+
+`git clone --recursive -j8 https://github.com/immutag/immutag`
+
+depending on the version of git you have.
+
+You'll need docker installed.
 
 ```
 docker volume create --name=immutag-cargo-data
@@ -195,7 +205,7 @@ Make sure you are in the `tests/` directory before running tests, otherwise test
 
 **Run all tests**
 
-`./test_all.sh`
+`./test_all.sh run --sudo --hardstart`
 
 **Run specific test**
 
