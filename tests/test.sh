@@ -35,20 +35,21 @@ if [ "$cmd" = "run" ];then
     fi
 
     if [ -n "${HARDSTART}" ];then
-        "$sudo" docker-compose stop
-        "$sudo" docker-compose up -d --remove-orphans --force-recreate
+	hardstart_flag="--hard-start"
+    else
+	hardstart_flag=""
     fi
 
     if [ "$test_type" = "all" ];then
-       ./test_case.sh run add_file    "$sudo_flag"
-       ./test_case.sh run add_tag     "$sudo_flag"
-       ./test_case.sh run init        "$sudo_flag"
-       ./test_case.sh run tag_rm      "$sudo_flag"
-       ./test_case.sh run roll        "$sudo_flag"
-       ./test_case.sh run commit      "$sudo_flag"
-       ./test_case.sh run tag_replace "$sudo_flag"
+       ./test_case.sh run add_file    "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run add_tag     "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run init        "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run tag_rm      "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run roll        "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run commit      "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run tag_replace "$sudo_flag" "$hardstart_flag"
     else
-        ./test_case.sh run "$test_type" "$sudo_flag"
+        ./test_case.sh run "$test_type" "$sudo_flag" "$hardstart_flag"
     fi
 
 else

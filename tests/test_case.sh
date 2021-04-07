@@ -15,6 +15,10 @@ if [ "$cmd" = "run" ];then
         SUDO=YES
         shift # past argument
         ;;
+        -h|--hard-start)
+        HARDSTART=YES
+        shift # past argument
+        ;;
         *)    # unknown option
         POSITIONAL+=("$1") # save it in an array for later
         shift # past argument
@@ -22,6 +26,16 @@ if [ "$cmd" = "run" ];then
     esac
     done
     set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    if [ -n "${HARDSTART}" ];then
+        if [ -n "${SUDO}" ];then
+            sudo docker-compose stop
+            sudo docker-compose up -d --remove-orphans --force-recreate
+	else
+            docker-compose stop
+            docker-compose up -d --remove-orphans --force-recreate
+	fi
+    fi
 
     # Can't run eval on docker exec commands with quotations, so can't do "$sudo" or something prefixed to below docker commands.
     if [ -n "${SUDO}" ];then
