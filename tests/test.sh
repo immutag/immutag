@@ -1,5 +1,4 @@
 #!/bin/bash
-
 cmd="$1"
 test_type="$2"
 
@@ -15,6 +14,10 @@ if [ "$cmd" = "run" ];then
         SUDO=YES
         shift # past argument
         ;;
+        -h|--hard-start)
+        HARDSTART=YES
+        shift # past argument
+        ;;
         *)    # unknown option
         POSITIONAL+=("$1") # save it in an array for later
         shift # past argument
@@ -23,41 +26,29 @@ if [ "$cmd" = "run" ];then
     done
     set -- "${POSITIONAL[@]}" # restore positional parameters
 
-    # Can't run eval on docker exec commands with quotations, so can't do "$sudo" or something prefixed to below docker commands.
     if [ -n "${SUDO}" ];then
-        # Make install script executable.
-        chmod u+x ../dev/install
-
-        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
-
-        # Undo install permissions so as to avoid running it on host.
-        chmod a-x,g+w ../dev/install
-
-        # Setup the test.
-        sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
-
-        # Run the target test.
-        sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
-
-        # Teardown the test.
-        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
+	sudo_flag="--sudo"
+	sudo="sudo"
     else
-        # Make install script executable.
-        chmod u+x ../dev/install
+	sudo_flag=""
+	sudo=""
+    fi
 
-        docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
+    if [ -n "${HARDSTART}" ];then
+        "$sudo" docker-compose stop
+        "$sudo" docker-compose up -d --remove-orphans --force-recreate
+    fi
 
-        # Undo install permissions so as to avoid running it on host.
-        chmod a-x,g+w ../dev/install
-
-        # Setup the test.
-        docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
-
-        # Run the target test.
-        docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
-
-        # Teardown the test.
-        docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
+    if [ "$test_type" = "all" ];then
+       ./test_case.sh run add_file    "$sudo_flag"
+       ./test_case.sh run add_tag     "$sudo_flag"
+       ./test_case.sh run init        "$sudo_flag"
+       ./test_case.sh run tag_rm      "$sudo_flag"
+       ./test_case.sh run roll        "$sudo_flag"
+       ./test_case.sh run commit      "$sudo_flag"
+       ./test_case.sh run tag_replace "$sudo_flag"
+    else
+        ./test_case.sh run "$test_type" "$sudo_flag"
     fi
 
 else
