@@ -23,28 +23,42 @@ if [ "$cmd" = "run" ];then
     done
     set -- "${POSITIONAL[@]}" # restore positional parameters
 
+    # Can't run eval on docker exec commands with quotations, so can't do "$sudo" or something prefixed to below docker commands.
     if [ -n "${SUDO}" ];then
-	sudo="sudo"
+        # Make install script executable.
+        chmod u+x ../dev/install
+
+        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
+
+        # Undo install permissions so as to avoid running it on host.
+        chmod a-x,g+w ../dev/install
+
+        # Setup the test.
+        sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
+
+        # Run the target test.
+        sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
+
+        # Teardown the test.
+        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
     else
-	sudo=""
+        # Make install script executable.
+        chmod u+x ../dev/install
+
+        docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
+
+        # Undo install permissions so as to avoid running it on host.
+        chmod a-x,g+w ../dev/install
+
+        # Setup the test.
+        docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
+
+        # Run the target test.
+        docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
+
+        # Teardown the test.
+        docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
     fi
-
-    # Make install script executable.
-    chmod u+x ../dev/install
-
-    sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install'
-
-    # Undo install permissions so as to avoid running it on host.
-    chmod a-x,g+w ../dev/install
-
-    # Setup the test.
-    sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
-
-    # Run the target test.
-    sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
-
-    # Teardown the test.
-    sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
 
 else
     echo ""
