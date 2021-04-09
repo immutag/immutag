@@ -3,21 +3,21 @@
 mkdir /root/immutag_test/
 
 # Copy test script into container's appropriate dir because shunit won't allow test script to change directory.
-cp /immutag/src/teardown_test.sh /root/immutag_test/
-cp /immutag/src/add_file_setup_test.sh /root/immutag_test/
-cp /immutag/src/add_tag_setup_test.sh /root/immutag_test/
-cp /immutag/src/tag_rm_setup_test.sh /root/immutag_test/
-cp /immutag/src/tag_replace_setup_test.sh /root/immutag_test/
-cp /immutag/src/init_setup_test.sh /root/immutag_test/
-cp /immutag/src/commit_setup_test.sh /root/immutag_test/
-cp /immutag/src/roll_setup_test.sh /root/immutag_test/
+cp /immutag/tests/teardown_test.sh /root/immutag_test/
+cp /immutag/tests/add_file_setup_test.sh /root/immutag_test/
+cp /immutag/tests/add_tag_setup_test.sh /root/immutag_test/
+cp /immutag/tests/tag_rm_setup_test.sh /root/immutag_test/
+cp /immutag/tests/tag_replace_setup_test.sh /root/immutag_test/
+cp /immutag/tests/init_setup_test.sh /root/immutag_test/
+cp /immutag/tests/commit_setup_test.sh /root/immutag_test/
+cp /immutag/tests/roll_setup_test.sh /root/immutag_test/
 
-cp /immutag/src/add_file_test.sh /root/immutag_test/
-cp /immutag/src/add_tag_test.sh /root/immutag_test/
-cp /immutag/src/tag_rm_test.sh /root/immutag_test/
-cp /immutag/src/tag_replace_test.sh /root/immutag_test/
-cp /immutag/src/init_test.sh /root/immutag_test/
-cp /immutag/src/commit_test.sh /root/immutag_test/
-cp /immutag/src/roll_test.sh /root/immutag_test/
+cp /immutag/tests/add_file_test.sh /root/immutag_test/
+cp /immutag/tests/add_tag_test.sh /root/immutag_test/
+cp /immutag/tests/tag_rm_test.sh /root/immutag_test/
+cp /immutag/tests/tag_replace_test.sh /root/immutag_test/
+cp /immutag/tests/init_test.sh /root/immutag_test/
+cp /immutag/tests/commit_test.sh /root/immutag_test/
+cp /immutag/tests/roll_test.sh /root/immutag_test/
 
 chmod +x /root/immutag_test/*
