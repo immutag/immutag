@@ -117,4 +117,4 @@ WORKDIR /Downloads/immutag/dev
 
 RUN nix-env -iA nixpkgs.ripgrep
 
-WORKDIR /immutag/dev
+WORKDIR /immutag

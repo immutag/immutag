@@ -2,7 +2,7 @@ version: "3"
 
 services:
   environment:
-    image: immutag:0.0.3
+    image: immutag:0.0.4
     volumes:
       - ./:/immutag
       - immutag-cargo-data:/usr/local/cargo
