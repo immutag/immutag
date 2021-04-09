@@ -39,13 +39,16 @@ if [ "$cmd" = "run" ];then
 
     # Can't run eval on docker exec commands with quotations, so can't do "$sudo" or something prefixed to below docker commands.
     if [ -n "${SUDO}" ];then
-        # Make install script executable.
+        # Make installs script executable.
         chmod u+x ../dev/install_container
+        chmod u+x ../dev/test_install_container
 
         sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
+        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
 
         # Undo install permissions so as to avoid running it on host.
         chmod a-x,g+w ../dev/install_container
+        chmod a-x,g+w ../dev/test_install_container
 
         # Setup the test.
         sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
@@ -56,10 +59,12 @@ if [ "$cmd" = "run" ];then
         # Teardown the test.
         sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
     else
-        # Make install script executable.
+        # Make install scripts executable.
         chmod u+x ../dev/install_container
+        chmod u+x ../dev/test_install_container
 
         docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
+        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
 
         # Undo install permissions so as to avoid running it on host.
         chmod a-x,g+w ../dev/install_container
