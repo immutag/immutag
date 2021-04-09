@@ -1,6 +1,8 @@
 # Immutag
 
-**WARNING**: this readme may not always accurately reflect the state of the software as this is a work-in-progress.
+- [ ] Test
+
+**CAVEATS** This readme may not always accurately reflect the state of the software as this is a work-in-progress. The software is experimental and in alpha stage. If the design choices and code structure seems confusing to you, please jump [here to learn more about the rationale](#code-structure-and-development-rationale).
 
 Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
 
@@ -8,7 +10,7 @@ Metadata can be pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoi
 
 You don't need to acquire any bitcoin or tokens or use the bitcoin network if you choose. You can keep all or some of the data offline or on a local network. If you choose to make use of bitcoin's network, you can cryptographically prove the authenticity and chronology of your creations.
 
-This is a working prototype glued together with bash scripts, but it's modular, functional in style, and tested. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
+This is a working prototype glued together with bash scripts, but it's modular and refactorable. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
 
 
 ## Usage and examples
@@ -21,7 +23,7 @@ Again, you dont' need to buy or use bitcoin to make use of most of the features 
 
 `imt create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
 
-(You'll need to retreive or generate the mnemonic from elsewhere, such as with you bitcoin wallet app. It should be a wallet specifically designated from immutag use and not have 'money' on it. At the moment, immutag stores the wallet insecurely for development purposes. In the future, immutag will encrypt the wallet in addition to creating api endpoints that can accept bitcoin addresses without the need for storing private keys or mnemonics.)
+(You'll need to retreive or generate the mnemonic from elsewhere, such as with you bitcoin wallet app. It should be a wallet specifically designated from immutag use and not have 'money' on it. At the moment, immutag stores the wallet insecurely for development purposes. In the future, immutag will encrypt the wallet in addition to creating local api endpoints that can accept bitcoin addresses without the need for storing private keys or mnemonics.)
 
 **Add a music file with tags that can be used to find it later.**
 
@@ -73,6 +75,8 @@ You'll select the file from the menu.
 
 `imt update [--store-name NAME] FILE_ADDR`
 
+***The high-level commands for searching, pulling, and pushing metadata and files in a network are forthcoming.***
+
 ## Install (dev)
 
 Clone the repo and depending on the version of git you have...
@@ -81,7 +85,7 @@ Clone the repo and depending on the version of git you have...
 
 or
 
-`git clone --recursive -j8 https://github.com/immutag/immutag`
+`git clone --recursive-submodules -j8 https://github.com/immutag/immutag`
 
 
 You'll need docker installed.
@@ -89,12 +93,14 @@ You'll need docker installed.
 ```
 docker volume create --name=immutag-cargo-data
 docker volume create --name=nix-data
-docker build -t immutag:0.0.3 .
+docker build -t immutag:0.0.4 .
 ```
 
 At the moment, the install is for a development environment and not for user distribution.
 
 ## Dev workflow
+
+It's recommended that run tests first. To jump to test info, see [here](#test).
 
 To launch.
 
@@ -113,7 +119,6 @@ To stop.
 
 `docker-compose stop`
 
-To jump to test info, see [here](#test).
 
 ## How it works
 
@@ -165,7 +170,13 @@ $HOME/immutag
         ├── git-annex | but ipfs or other can be dropped in on top.
 ```
 
-## File list: this metadata
+### Code structure and development rationale
+
+Immutag was originally written in rust. However, after a design pivot it became clearer that the aim is be more explicitly agnostic towards it's database (currently text files), metadata versioning (currently git), blob versioning (currently git-annex), blockchain, and other technologies it uses. Therefore, the program is glued together with command line apps and shell scripts. That also means the software can be under and MIT license even though it may call copy-left programs. While efforts may be made in alternate implementations to move functionality into libraries in whole or in part, at the moment there is no urgent plans to do so. However, because everything is so modular other developers can break of little pieces of immutag for refactoring and radually transition the software towards their requirements.
+
+All of the shell scripts are in `src/`. Everything mostly works together using pipes. Again, that means conservatively it can be remain under MIT license and not depend on any code that is under GPL.
+
+## File list: the metadata
 The metadata/file-list has the following entries for each tagging operation.
 
 
@@ -207,17 +218,17 @@ Make sure you are in the `tests/` directory before running tests, otherwise test
 
 `./test.sh all --sudo --hard-start`
 
-If you don't need sudo to run docker, ommit the sudo flag. `--hard-start` restarts the docker container for fresh test runs.
+If you don't need sudo to run docker, omit the sudo flag. `--hard-start` restarts the docker container for fresh test runs.
 
 **Run specific test**
 
-./test.sh TEST_CASE [--sudo] [--hard-start]
+`./test.sh TEST_CASE [--sudo] [--hard-start]`
 
 See `test.sh` for a list of test cases.
 
 ## Useful info
 
-While in fzf, find tags with exact matches use `'`: say you want to find a file with a `foo` and `bar` tag:
+While in fzf, find tags with exact matches use single quote ('). Say you want to find a file with a `foo` and `bar` tag:
 
 `imt find`
 
@@ -225,7 +236,7 @@ While in fzf, find tags with exact matches use `'`: say you want to find a file 
 
 `'foo 'bar`
 
-Suggestion: to open a file, use xdg-open or some other clever file-opener.
+Suggestion: to open a file, use xdg-open or some other automtic file-opener.
 
 `xdg-open $(imt find)`
 
