@@ -1,5 +1,65 @@
 #!/bin/bash
 
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -h|--help)
+    HELP=YES
+    shift # past argument
+    ;;
+    -v|--version)
+    HELP=YES
+    shift # past argument
+    ;;
+    *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [ -n "${HELP}" ];then
+	read -r -d '' HELP_OUTPUT <<EOM
+immutag 0.0.807
+
+An experimental content-addressable file manager.
+Project home page: https://github/immutag/immutag
+
+USAGE:
+   imt [OPTIONS] [COMMAND]
+
+OPTIONS
+     -v, --version          Print version info and exit
+     -n, --store-name       Specify store other than "main" to run commands against
+
+These are basic imt commands.
+
+create               Start a default store or custom store
+add                  Add a file along with initial tags
+add-tag              Add a tag
+rm-tags              Remove tags
+replace-tags         Replace tags
+rollback             Roll a generation back
+rollforward          Roll a generation ahead
+find                 Find files by tags
+update               Update a file to a new version
+
+Command specific help descriptions are forthcoming. See the readme in the homepage for usage in the meantime.
+EOM
+    echo "$HELP_OUTPUT"
+fi
+
+if [ -n "${VERSION}" ];then
+	read -r -d '' VERSION_OUTPUT <<EOM
+immutag 0.0.807
+EOM
+    echo "$VERSION_OUTPUT"
+fi
+
 cmd="$1"
 
 if [ "$cmd" = "create" ];then
