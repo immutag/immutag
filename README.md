@@ -216,13 +216,13 @@ Make sure you are in the `tests/` directory before running tests, otherwise test
 
 **Run all tests**
 
-`./test.sh all --sudo --hard-start`
+`./test.sh run all --sudo --hard-start`
 
 If you don't need sudo to run docker, omit the sudo flag. `--hard-start` restarts the docker container for fresh test runs.
 
 **Run specific test**
 
-`./test.sh TEST_CASE [--sudo] [--hard-start]`
+`./test.sh run TEST_CASE [--sudo] [--hard-start]`
 
 See `test.sh` for a list of test cases.
 
