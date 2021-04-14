@@ -117,4 +117,6 @@ WORKDIR /Downloads/immutag/dev
 
 RUN nix-env -iA nixpkgs.ripgrep
 
+RUN nix-env -iA nixpkgs.magic-wormhole
+
 WORKDIR /immutag
