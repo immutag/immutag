@@ -24,3 +24,15 @@ mv /tmp/immutag-"$name"/immutag-wormhole "$name"
 rsync -a /tmp/immutag-1492 "$name"/
 mv /tmp/immutag-1492 "$name"/wallet-info
 rm "$name"/immutag-1492
+
+# Initial version control.
+git init > /dev/null 2>&1
+git config user.email "immutag"
+git config user.name "immutag"
+cd  files || exit
+git config user.email "immutag"
+git config user.name "immutag"
+git init > /dev/null 2>&1
+git annex init > /dev/null 2>&1
+
+_imt_commit "$name"
