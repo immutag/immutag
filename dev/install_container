@@ -22,6 +22,8 @@ cp ../src/cmd_gen_hash.sh $HOME/.local/bin/immutag/imt_gen_hash
 cp ../src/cmd_list_gen_hash.sh $HOME/.local/bin/immutag/imt_list_gen_hash
 cp ../src/cmd_commit.sh $HOME/.local/bin/immutag/imt_commit
 cp ../src/cmd_update_file.sh $HOME/.local/bin/immutag/imt_update_file
+cp ../src/cmd_wormhole_send.sh $HOME/.local/bin/immutag/imt_wormhole_send
+cp ../src/cmd_wormhole_recv.sh $HOME/.local/bin/immutag/imt_wormhole_recv
 
 cp ../src/_imt_append_list.sh $HOME/.local/bin/immutag/_imt_append_list
 cp ../src/_imt_new_index_addr.sh $HOME/.local/bin/immutag/_imt_new_index_addr
