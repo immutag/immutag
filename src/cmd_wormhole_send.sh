@@ -9,4 +9,6 @@ rsync -a --copy-links "$name" /tmp/ \
 --exclude .git \
 --exclude files/.git \
 
-wormhole send "$name"
+mv /tmp/"$name" /tmp/immutag-wormhole
+
+wormhole send /tmp/immutag-wormhole

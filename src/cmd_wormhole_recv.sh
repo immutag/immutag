@@ -5,20 +5,20 @@ name="$1"
 
 cd "$immutag_path" || exit
 
-cd "$name" || exit
+# Move out wallet-info from user previously created store.
+mv "$name"/wallet-info /tmp/immutag-1492
 
-mv wallet-info /tmp/immutag-wallet-info
-
-cd .. && rm -r "$name"
-
-mkdir "$name"
-
-cd "$name" || exit
-
-# Receive .git
+# Receive store.
+mkdir /tmp/immutag-"$name"
+cd /tmp/immutag-"$name"
 wormhole receive
 
-# Make sure there is nothing but .git here
-git reset HEAD --hard
+# Remove old store
+cd "$immutag_path" || exit
+rm -r "$name"
 
-mv /tmp/immutag-wallet-info wallet-info
+# Move in received store
+mv /tmp/immutag-"$name"/immutag-wormhole "$name"
+
+# Copy over wallet info into new store.
+rsync -a /tmp/immutag-1492 "$name"/
