@@ -23,3 +23,4 @@ mv /tmp/immutag-"$name"/immutag-wormhole "$name"
 # Copy over wallet info into new store.
 rsync -a /tmp/immutag-1492 "$name"/
 mv /tmp/immutag-1492 "$name"/wallet-info
+rm "$name"/immutag-1492
