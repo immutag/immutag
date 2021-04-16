@@ -7,7 +7,7 @@ cd "$immutag_path" || exit
 
 cd "$name" || exit
 
-mv wallet-info /tmp/immutag/wallet-info
+mv wallet-info /tmp/immutag-wallet-info
 
 cd .. && rm -r "$name"
 
@@ -21,4 +21,4 @@ wormhole receive
 # Make sure there is nothing but .git here
 git reset HEAD --hard
 
-mv /tmp/immutag/wallet-info wallet-info
+mv /tmp/immutag-wallet-info wallet-info
