@@ -75,7 +75,7 @@ testEquality() {
     assertEquals "$gitrev_oid_b_store_2" "$address_b_store_2"
 
     ## Rollback
-    imt_rollback "$name"
+    imt rollback
     gitrev_oids_store_3=$(git rev-parse HEAD git-annex)
     gitrev_oid_a_store_3=$(echo "$gitrev_oids_store_3" | sed -n '1p')
     gitrev_oid_b_store_3=$(echo "$gitrev_oids_store_3" | sed -n '2p')
@@ -83,14 +83,14 @@ testEquality() {
     assertEquals "$gitrev_oid_a_store_3" "$gitrev_oid_a_store_1"
 
     ## Rollforward
-    imt_rollforward "$name"
+    imt rollforward
     gitrev_oids_store_4=$(git rev-parse HEAD git-annex)
     gitrev_oid_a_store_4=$(echo "$gitrev_oids_store_4" | sed -n '1p')
     gitrev_oid_b_store_4=$(echo "$gitrev_oids_store_4" | sed -n '2p')
     assertEquals "$gitrev_oid_a_store_4" "$gitrev_oid_a_store_2"
     assertEquals "$gitrev_oid_b_store_4" "$gitrev_oid_b_store_2"
 
-    imt_rollback "$name"
+    imt rollback
 
     cd "$original_path"
 
@@ -151,7 +151,7 @@ testEquality() {
     assertEquals "$gitrev_oid_a_store_6" "$address_a_store_5"
     assertEquals "$gitrev_oid_b_store_6" "$address_b_store_5"
 
-    imt_rollback "$name"
+    imt rollback
 
     cd "$immutag_path"
     cd "$name"
