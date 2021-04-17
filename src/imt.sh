@@ -460,6 +460,30 @@ fi
 
 
 if [ "$cmd" = "rollforward" ];then
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
     if [ -n "${STORENAME}" ];then
 	storename="$STORENAME"
     else
