@@ -11,6 +11,7 @@ cp /immutag/tests/tag_replace_setup_test.sh /root/immutag_test/
 cp /immutag/tests/init_setup_test.sh /root/immutag_test/
 cp /immutag/tests/commit_setup_test.sh /root/immutag_test/
 cp /immutag/tests/roll_setup_test.sh /root/immutag_test/
+cp /immutag/tests/roll_specific_store_setup_test.sh /root/immutag_test/
 
 cp /immutag/tests/add_file_test.sh /root/immutag_test/
 cp /immutag/tests/add_tag_test.sh /root/immutag_test/
@@ -19,5 +20,6 @@ cp /immutag/tests/tag_replace_test.sh /root/immutag_test/
 cp /immutag/tests/init_test.sh /root/immutag_test/
 cp /immutag/tests/commit_test.sh /root/immutag_test/
 cp /immutag/tests/roll_test.sh /root/immutag_test/
+cp /immutag/tests/roll_specific_store_test.sh /root/immutag_test/
 
 chmod +x /root/immutag_test/*

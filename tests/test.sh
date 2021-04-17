@@ -46,6 +46,7 @@ if [ "$cmd" = "run" ];then
        ./test_case.sh run init        "$sudo_flag" "$hardstart_flag"
        ./test_case.sh run tag_rm      "$sudo_flag" "$hardstart_flag"
        ./test_case.sh run roll        "$sudo_flag" "$hardstart_flag"
+       ./test_case.sh run roll_specific_store "$sudo_flag" "$hardstart_flag"
        ./test_case.sh run commit      "$sudo_flag" "$hardstart_flag"
        ./test_case.sh run tag_replace "$sudo_flag" "$hardstart_flag"
     else
