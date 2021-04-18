@@ -1,6 +1,6 @@
 # Immutag
 
-Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
+Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices. Full implentation will use bitcoin and ipfs, but other services can be dropped in its place. Right now, sharing is possible 'directly'.
 
 
 **CAVEATS** This readme may not always accurately reflect the state of the software as this is a work-in-progress. The software is experimental and in alpha stage. In fact, it's prototype glued together with shellscripts. If the design choices and code structure seems confusing to you, please jump [here to learn more about the rationale](#code-structure-and-development-rationale).
@@ -254,15 +254,6 @@ Suggestion: to open a file, use xdg-open or some other automtic file-opener.
 * jq: 1.5
 * rsync: 3.1.3
 * magic-wormhole: 0.12.0
-
-## Other possibilities
-
-This may open up creating a modular nix type of file management for 'free'. That is immutag can be instantiated in more than one place, like git, if the user is allowed to modify the bin directory with symlinks of their own from the file store. The version of the bin files can be ascertained from the metadata and searched like any other immutag file. The exact content hashes of each file version can be extracted from git-annex's tree.
-
-See how the file store opens up a similar setup as nix. Below is the jq binary symlink relationship (`ls -l`) of jq (a json cli tool) on a system running a nix package manager.
-
-lrwxrwxrwx 1 7db9a wheel 61 Dec 31  1969 /nix/store/q4q25qih2ychclzggwhw715p7v3jbn9g-user-environment/bin/jq -> /nix/store/hjcxlrdbw1v07y4wp19vm5k1i3l1l5bz-jq-1.6-bin/bin/jq
-
 
 ## Todo
 
