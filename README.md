@@ -1,33 +1,21 @@
 # Immutag
 
-- [ ] Test
-
-**CAVEATS** This readme may not always accurately reflect the state of the software as this is a work-in-progress. The software is experimental and in alpha stage. If the design choices and code structure seems confusing to you, please jump [here to learn more about the rationale](#code-structure-and-development-rationale).
-
 Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices.
 
-Metadata can be pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, it works well for purely offline use.
 
-You don't need to acquire any bitcoin or tokens or use the bitcoin network if you choose. You can keep all or some of the data offline or on a local network. If you choose to make use of bitcoin's network, you can cryptographically prove the authenticity and chronology of your creations.
-
-This is a working prototype glued together with bash scripts, but it's modular and refactorable. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
-
-
-## Usage and examples
+**CAVEATS** This readme may not always accurately reflect the state of the software as this is a work-in-progress. The software is experimental and in alpha stage. In fact, it's prototype glued together with shellscripts. If the design choices and code structure seems confusing to you, please jump [here to learn more about the rationale](#code-structure-and-development-rationale).
 
 Again, you dont' need to buy or use bitcoin to make use of most of the features of immutag, so go right ahead and jump in.
 
 **Create an immutag store with a bitcoin mnemonic.**
 
-`imt create STORE_NAME MNEMONIC`
-
 `imt create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
 
-(You'll need to retreive or generate the mnemonic from elsewhere, such as with you bitcoin wallet app. It should be a wallet specifically designated from immutag use and not have 'money' on it. At the moment, immutag stores the wallet insecurely for development purposes. In the future, immutag will encrypt the wallet in addition to creating local api endpoints that can accept bitcoin addresses without the need for storing private keys or mnemonics.)
+You can also create named stores and do operations against named stores with `--store-name NAME`.
+
+For actual use, please retreive or generate the mnemonic from elsewhere, such as with you bitcoin wallet app. It should be a wallet specifically designated from immutag use and not have 'money' on it. At the moment, immutag stores the wallet insecurely for development purposes. In the future, immutag will encrypt the wallet in addition to creating local api endpoints that can accept bitcoin addresses without the need for storing private keys or mnemonics.
 
 **Add a music file with tags that can be used to find it later.**
-
-`imt add STORE_NAME FILE TAGS...`
 
 `imt add "vivaldi-four-seasons.mp3" music vivaldi classical`
 
@@ -35,11 +23,7 @@ Again, you dont' need to buy or use bitcoin to make use of most of the features 
 
 1Akbr is the file name to immutag. It's copied into a immutag's file store, which is simply a directory versioned by git-annex.
 
-If you don't want to add the original name and extension of the file as tags, then do:
-
-`imt add --no-default-name STORE_NAME FILE TAGS...`
-
-To find files by tags.
+**To find files by tags.**
 
 `imt find`
 
@@ -52,8 +36,6 @@ For example, open a file with xdg-open.
 Actually, the find file menu may appear familiar. It's fzf: a cli utility to find files.
 
 **To add a tag to a file already tagged.**
-
-`imt add-tag STORE_NAME FILE_ADDR TAGS...`
 
 So for example to add the tag 'name=four-seasons' to our vivaldi four seasons song:
 
@@ -73,9 +55,32 @@ You'll select the file from the menu.
 
 **To update a file.**
 
-`imt update [--store-name NAME] FILE_ADDR`
+`imt update ADDR FILE`
 
-***The high-level commands for searching, pulling, and pushing metadata and files in a network are forthcoming.***
+Let's say we remastered that vivaldi track and we want to update the file to latest.
+
+imt update $(imt find --addr) remaster-vivaldi-four-seasons.mp3
+
+By the way, all of this operations can be rolled back and forward with `imt rollback` and `imt rollforward`.
+
+**Sharing store's with others**
+
+Metadata can be pushed to distributed stores (e.g. ipfs) or ledgers (e.g. bitcoin), making them globally discoverable. However, it works well for purely offline use. Full implementation is forthcoming.
+
+Right now you can do it without bitcoin and share 'direct' with your friends thanks to [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole) (a non-cloud file sharing tool). However, other 'direct' file sharing tools can be dropped in place by developers, including new forks of magic-wormhole.
+
+The sender.
+
+`imt wormhole-send --store-name NAME`
+
+The sender immediately gets code they can message to the receiver. Just use your favorite messaging app or even do it over the phone. Once the the receiver downloads, the code is no longer is useable.
+
+
+The receiver must first create an empty store that can be used to receive. The receiver can name their store whatever they want and doesn't need to match the sender.
+```
+imt create --store-name NAME "MNEMONIC"
+imt wormhole-recv --store-name NAME
+```
 
 ## Install (dev)
 
@@ -101,6 +106,15 @@ At the moment, the install is for a development environment and not for user dis
 ## Dev workflow
 
 It's recommended that run tests first. To jump to test info, see [here](#test).
+
+To run all tests
+
+```
+cd tests
+./test.sh run all --sudo --hard-start
+```
+
+Omit the sudo flag if you don't require sudo to run docker.
 
 To launch.
 
@@ -128,13 +142,15 @@ All files have a bitcoin (global) address. The user supplies their own public ke
 
 ### Distribution and sharing
 
-The files are discoverable on a distributed file network created with git-annex, but ipfs or something else can be used. Again, everything can be kept as local as the user wants and can be kept offline. The files are found by author created tags and metadata. Anyone can copy files (i.e., forking) that are pushed to the internet and create their own tags, but the chronology will always show who was the early author.
+At the moment, users can share 'directly' with one another thanks to [magic-wormhole](https://github.com/magic-wormhole/magic-wormhole). The commands are `imt wormhole-send` and `imt wormhole-recv`.
 
-If pushed to a distributed ledger:
+No blockchain records or cloud service. However, by immutag's nature, files can be made discoverable on a distributed file network.
 
-`imt push STORE_NAME LEDGER_NAME`
+If push or publish a store to a distributed ledger will soon look something like this
 
-each immutag address records a message stating it's an immutag address and what version of the protocol it's using. The only other messages (unless the protocol is updated) will be the content-addressable hash (versions) of the file-list. When a user fetches the data from the distributed-ledger, it only needs the single content-addressable hash to immutably build all the metadata and file. That way only the bare-minimum has to be pushed to a distributed ledger. All the data is pulled from a distributed file network, such as ipfs. As few or much of the versions (content addresses) can be pushed to the ledger.
+`imt push --store-name STORE_NAME LEDGER_NAME`
+
+The files won't be stored on the blockchain, just the content-addresses. That way ipfs can be used to distribute files.
 
 ### Versioning
 
@@ -172,6 +188,10 @@ $HOME/immutag
 
 ### Code structure and development rationale
 
+You don't need to acquire any bitcoin or tokens or use the bitcoin network if you choose. You can keep all or some of the data offline or on a local network. If you choose to make use of bitcoin's network, you can cryptographically prove the authenticity and chronology of your creations.
+
+This is a working prototype glued together with bash scripts, but it's modular and refactorable. A pivot in the design of underlying protocol would have resulted in a laborous re-write in a compiled language. See 7db9a/immutag.
+
 Immutag was originally written in rust. However, after a design pivot it became clearer that the aim is be more explicitly agnostic towards it's database (currently text files), metadata versioning (currently git), blob versioning (currently git-annex), blockchain, and other technologies it uses. Therefore, the program is glued together with command line apps and shell scripts. That also means the software can be under and MIT license even though it may call copy-left programs. While efforts may be made in alternate implementations to move functionality into libraries in whole or in part, at the moment there is no urgent plans to do so. However, because everything is so modular other developers can break of little pieces of immutag for refactoring and radually transition the software towards their requirements.
 
 All of the shell scripts are in `src/`. Everything mostly works together using pipes. Again, that means conservatively it can be remain under MIT license and not depend on any code that is under GPL.
@@ -193,22 +213,6 @@ git-annex <version>: <commit-master> <commit-git-annex>
 Each line can have as many hashes as is needed. For example, in addition to git-annex oid, it's useful to include the git-annex metadata oid.
 
 Rollbacks are enabled with git-annex. Remember, each generation of the file list also contains the store's sha256 and ipfs addr.
-
-### Use cases
-
-It's immediately useful for managing your media files, such as images, music, and video. However, it has broad use. For example, it can act as distributed sofware repo if the directory of the repo is flattened into a single file, likely .tar before getting copied into it's store. Really it can used on any type of files, whether version control is needed or not.
-
-Other possibilities:
-
-* Web app and software distribution.
-
-* Distributed software repo hosting.
-
-* Package management.
-
-* Archive services.
-
-There all sorts of other uses cases that are yet envisioned.
 
 ## Test
 
@@ -248,6 +252,8 @@ Suggestion: to open a file, use xdg-open or some other automtic file-opener.
 * git: 2.3
 * git-annex: 8.20210127
 * jq: 1.5
+* rsync: 3.1.3
+* magic-wormhole: 0.12.0
 
 ## Other possibilities
 
