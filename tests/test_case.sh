@@ -46,6 +46,9 @@ if [ "$cmd" = "run" ];then
         sudo docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
         sudo docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
 
+        sudo docker exec immutag_machine-b_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
+        sudo docker exec immutag_machine-b_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
+
         # Undo install permissions so as to avoid running it on host.
         chmod a-x,g+w ../dev/install_container
         chmod a-x,g+w ../dev/test_install_container
@@ -65,6 +68,10 @@ if [ "$cmd" = "run" ];then
 
         docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
         sudo docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
+
+        docker exec immutag_machine-b_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
+        sudo docker exec immutag_machine-b_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
+
 
         # Undo install permissions so as to avoid running it on host.
         chmod a-x,g+w ../dev/install_container
