@@ -43,40 +43,40 @@ if [ "$cmd" = "run" ];then
         chmod u+x ../dev/install_container
         chmod u+x ../dev/test_install_container
 
-        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
-        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
+        sudo docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
+        sudo docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
 
         # Undo install permissions so as to avoid running it on host.
         chmod a-x,g+w ../dev/install_container
         chmod a-x,g+w ../dev/test_install_container
 
         # Setup the test.
-        sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
+        sudo docker exec immutag_machine_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
 
         # Run the target test.
-        sudo docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
+        sudo docker exec immutag_machine_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
 
         # Teardown the test.
-        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
+        sudo docker exec immutag_machine_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
     else
         # Make install scripts executable.
         chmod u+x ../dev/install_container
         chmod u+x ../dev/test_install_container
 
-        docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
-        sudo docker exec immutag_environment_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
+        docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./install_container'
+        sudo docker exec immutag_machine_1 /bin/sh -c 'cd /immutag/dev && ./test_install_container'
 
         # Undo install permissions so as to avoid running it on host.
         chmod a-x,g+w ../dev/install_container
 
         # Setup the test.
-        docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
+        docker exec immutag_machine_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_setup_test.sh"
 
         # Run the target test.
-        docker exec immutag_environment_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
+        docker exec immutag_machine_1 /bin/sh -c "cd /root/immutag_test && ./'$test_type'_test.sh"
 
         # Teardown the test.
-        docker exec immutag_environment_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
+        docker exec immutag_machine_1 /bin/sh -c 'cd /root/immutag_test/ && ./teardown_test.sh'
     fi
 
 else

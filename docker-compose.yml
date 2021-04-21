@@ -1,16 +1,28 @@
 version: "3"
 
 services:
-  environment:
-    image: immutag:0.0.5
-    volumes:
-      - ./:/immutag
-      - immutag-cargo-data:/usr/local/cargo
-      - nix-data:/nix
-    tty: true
+  machine:
+     image: immutag:0.0.5
+     volumes:
+       - ./:/immutag
+       - immutag-cargo-data:/usr/local/cargo
+       - nix-data:/nix
+     tty: true
+
+  machine-b:
+     image: immutag:0.0.5
+     volumes:
+       - ./:/immutag
+       - immutag-cargo-data-b:/usr/local/cargo
+       - nix-data-b:/nix
+     tty: true
 
 volumes:
  immutag-cargo-data:
   external: true
  nix-data:
+  external: true
+ immutag-cargo-data-b:
+  external: true
+ nix-data-b:
   external: true
