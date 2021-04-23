@@ -6,10 +6,16 @@
 #bash
 
 input="$@"
+cmd=$(echo "$input" | cut -d " " -f 1)
 
 sudo docker run -it \
 -v "$HOME"/immutag:/root/immutag \
 immutag:0.0.9 \
-imt "$input"
+imt $input
+
+if [ "$cmd" = "find" ];then
+
+    cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
+fi
 
 #cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
