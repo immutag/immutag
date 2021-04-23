@@ -377,11 +377,15 @@ if [ "$cmd" = "find" ];then
 	storename="main"
     fi
 
+    FIND=""
+
     if [ -n "${ADDRESS}" ];then
-        imt_find "$storename" addr
+	    FIND=$(imt_find "$storename" addr)
     else
-        imt_find "$storename"
+	    FIND=$(imt_find "$storename")
     fi
+
+    echo $FIND > $HOME/immutag/.find_output
 fi
 
 
