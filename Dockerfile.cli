@@ -125,6 +125,10 @@ RUN git clone --recursive -j8 https://github.com/immutag/immutag
 
 WORKDIR /immutag/dev
 
-ENV PATH=/fzf/bin/fzf:$PATH
+RUN bash -c "chmod +x install_container && yes | ./install_container"
+
+#ENV PATH=/fzf/bin/fzf:$PATH
+
+RUN bash -c "mv /fzf/bin/fzf /root/.local/bin/"
 
 WORKDIR /root/immutag
