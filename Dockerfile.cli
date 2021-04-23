@@ -121,7 +121,9 @@ RUN nix-env -iA nixpkgs.magic-wormhole
 
 WORKDIR /
 
-RUN git clone --recursive -j8 https://github.com/immutag/immutag
+#RUN git clone --recursive -j8 https://github.com/immutag/immutag
+
+COPY . /immutag
 
 WORKDIR /immutag/dev
 
