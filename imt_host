@@ -15,7 +15,7 @@ imt $input
 
 if [ "$cmd" = "find" ];then
 
-    cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
+    ln -s $(cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g") /tmp/immutag-file
 fi
 
 #cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
