@@ -9,4 +9,4 @@
 #-v "$HOME"/immutag:/root/immutag \
 #immutag:0.0.7 \
 #bash
-cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g" > /tmp/immutag-find-output
+cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
