@@ -5,8 +5,11 @@
 #-v electrumsv-immutag:/root/.electrums-sv immutag:0.0.2 \
 #bash
 
-#sudo docker run -it \
-#-v "$HOME"/immutag:/root/immutag \
-#immutag:0.0.7 \
-#bash
-cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
+input="$@"
+
+sudo docker run -it \
+-v "$HOME"/immutag:/root/immutag \
+immutag:0.0.9 \
+imt "$input"
+
+#cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g"
