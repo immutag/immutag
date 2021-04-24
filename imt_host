@@ -5,6 +5,7 @@
 
 input="$@"
 cmd=$(echo "$input" | cut -d " " -f 1)
+cmd=$(echo "$input" | cut -d " " -f 1)
 
 if [ "$cmd" = "add" ];then
 
@@ -57,10 +58,10 @@ if [ "$cmd" = "add" ];then
     cp "$file_abs_path" "$immutag_path"/stage/"$file"
 fi
 
-sudo docker run -it \
+sudo docker run -it --rm \
 -v "$HOME"/immutag:/root/immutag \
-immutag:0.0.10 \
-imt $input
+immutag:0.0.11 \
+$input
 
 if [ "$cmd" = "find" ];then
     # Need permissions to write in ~/immutag.
