@@ -280,3 +280,31 @@ The user can then fetch the metadata from that. From the metadata, the hashes of
 There is no way to convert an ipfs hash directly from a sha256. ipfs chunks the files in a particular way. Additionally, there's nothing preventing different ipfs versions from chunking differently.
 
 https://www.reddit.com/r/ipfs/comments/6qw39w/convert_sha256_to_ipfs_hash/
+
+### Docker app
+
+Put the `imt_host` script somewhere in the host's path as `imt`.
+
+`cp imt_host ~/.local/bin/imt`
+
+Build the image for docker app.
+```
+mv Dockerfile.cli Dockerfile
+sudo docker build -t immutag:0.0.11 .
+```
+
+Create default store.
+```
+sudo docker run \
+-v /home/daveamd/immutag:/root/immutag \
+immutag:0.0.11 \
+create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"
+```
+
+Add command must be ran from imt_host script.
+
+`imt add FILE TAGS`
+
+Find command must be ran from imt_host script.
+
+`imt find`
