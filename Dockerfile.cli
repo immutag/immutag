@@ -133,4 +133,6 @@ RUN bash -c "chmod +x install_container && yes | ./install_container"
 
 RUN bash -c "mv /fzf/bin/fzf /root/.local/bin/"
 
-WORKDIR /root/immutag
+WORKDIR /root/immutag/stage
+
+ENTRYPOINT ["/root/.local/bin/imt"]

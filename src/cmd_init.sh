@@ -9,6 +9,7 @@ cd "$HOME"/immutag || exit
 
 mkdir "$dir_path"
 mkdir "$dir_path"/files
+mkdir "$dir_path"/stage
 echo "immutag version: 0.0.5" > "$dir_path"/file-list.txt
 echo "immutag software sha256: <sha256>" >> "$dir_path"/file-list.txt
 echo "" >> "$dir_path"/file-list.txt
