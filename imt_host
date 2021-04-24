@@ -6,9 +6,60 @@
 input="$@"
 cmd=$(echo "$input" | cut -d " " -f 1)
 
+if [ "$cmd" = "add" ];then
+
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        --no-default-name)
+        NODEFAULTNAME=YES
+        shift # past argument
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    immutag_path="$HOME/immutag"
+
+    input="$*"
+
+    if [ -n "${STORENAME}" ];then
+        name="$STORENAME"
+    else
+        name="main"
+    fi
+
+    file="$2"
+    file_abs_path=$(eval realpath "$file")
+
+    # Exit script here if we can't find the file to be added to the store.
+    if [ ! -f "$file_abs_path" ];then
+        echo "Can't find file, host."
+        exit
+    fi
+
+    echo ""
+    echo "abs path: $file_abs_path"
+    echo "file: $file"
+
+    cp "$file_abs_path" "$immutag_path"/stage/"$file"
+fi
+
 sudo docker run -it \
 -v "$HOME"/immutag:/root/immutag \
-immutag:0.0.9 \
+immutag:0.0.10 \
 imt $input
 
 if [ "$cmd" = "find" ];then
