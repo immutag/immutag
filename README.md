@@ -301,6 +301,10 @@ immutag:0.0.11 \
 create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"
 ```
 
+Give host permission over immutag stores.
+
+`sudo chmod -R 777 ~/immutag`
+
 Add command must be ran from imt_host script.
 
 `imt add FILE TAGS`
