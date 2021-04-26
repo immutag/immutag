@@ -7,7 +7,7 @@ input="$@"
 cmd=$(echo "$input" | cut -d " " -f 1)
 cmd=$(echo "$input" | cut -d " " -f 1)
 
-if [ "$cmd" = "add" ];then
+if [ "$cmd" = "add" ] || [ "$cmd" = "update" ];then
 
     POSITIONAL=()
     while [[ $# -gt 0 ]]
@@ -65,7 +65,5 @@ $input
 
 if [ "$cmd" = "find" ];then
     # Need permissions to write in ~/immutag.
-    rm $HOME/immutag/file > /dev/null 2>&1
-    ln -s $(cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g") $HOME/immutag/file
-    echo "open symlink at ${HOME}/immutag/file"
+    rm $HOME/immutag/file > /dev/null 2>&1 ln -s $(cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g") $HOME/immutag/file
 fi

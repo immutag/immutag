@@ -124,7 +124,7 @@ if [ "$cmd" = "update" ];then
 	storename="main"
     fi
 
-    imt_update_file "$storename" "$addr" "$file"
+    imt_update_file "$storename" "$addr" "$immutag_path"/stage/"$file"
 fi
 
 #if [ "$cmd" = "add" ];then
@@ -381,11 +381,13 @@ if [ "$cmd" = "find" ];then
 
     if [ -n "${ADDRESS}" ];then
 	    FIND=$(imt_find "$storename" addr)
+            echo $FIND > $HOME/immutag/addr
+            echo "open symlink at immutag/addr"
     else
 	    FIND=$(imt_find "$storename")
+            echo $FIND > $HOME/immutag/.find_output
+            echo "open symlink at immutag/file"
     fi
-
-    echo $FIND > $HOME/immutag/.find_output
 fi
 
 
