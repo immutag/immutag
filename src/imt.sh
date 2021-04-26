@@ -1,5 +1,7 @@
 #!/bin/bash
 
+immutag_path="$HOME/immutag"
+
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -118,13 +120,19 @@ if [ "$cmd" = "update" ];then
     addr="$2"
     file="$3"
 
+    # To add file name and extension to tag.
+    fullfilename="$file"
+    filename=$(basename "$fullfilename")
+    fname="${filename%.*}"
+    ext="${filename##*.}"
+
     if [ -n "${STORENAME}" ];then
 	storename="$STORENAME"
     else
 	storename="main"
     fi
 
-    imt_update_file "$storename" "$addr" "$immutag_path"/stage/"$file"
+    imt_update_file "$storename" "$addr" "$immutag_path"/stage/"$fname"
 fi
 
 #if [ "$cmd" = "add" ];then

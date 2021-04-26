@@ -7,7 +7,7 @@ input="$@"
 cmd=$(echo "$input" | cut -d " " -f 1)
 cmd=$(echo "$input" | cut -d " " -f 1)
 
-if [ "$cmd" = "add" ] || [ "$cmd" = "update" ];then
+if [ "$cmd" = "add" ];then
 
     POSITIONAL=()
     while [[ $# -gt 0 ]]
@@ -58,6 +58,60 @@ if [ "$cmd" = "add" ] || [ "$cmd" = "update" ];then
     cp "$file_abs_path" "$immutag_path"/stage/"$file"
 fi
 
+if [ "$cmd" = "update" ];then
+
+    POSITIONAL=()
+    while [[ $# -gt 0 ]]
+    do
+    key="$1"
+
+    case $key in
+        -n|--store-name)
+        STORENAME="$2"
+        shift # past argument
+        shift # past value
+        ;;
+        *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+    done
+    set -- "${POSITIONAL[@]}" # restore positional parameters
+
+    addr="$2"
+    file="$3"
+
+    immutag_path="$HOME/immutag"
+
+    if [ -n "${STORENAME}" ];then
+	storename="$STORENAME"
+    else
+	storename="main"
+    fi
+
+    file="$3"
+    file_abs_path=$(eval realpath "$file")
+
+    # Exit script here if we can't find the file to be added to the store.
+    if [ ! -f "$file_abs_path" ];then
+        echo "Can't find file, host."
+        exit
+    fi
+
+    # To add file name and extension to tag.
+    fullfilename="$file"
+    filename=$(basename "$fullfilename")
+    fname="${filename%.*}"
+    ext="${filename##*.}"
+
+    echo ""
+    echo "abs path: $file_abs_path"
+    echo "file: $file"
+
+    cp "$file_abs_path" "$immutag_path"/stage/"$fname"
+fi
+
 sudo docker run -it --rm \
 -v "$HOME"/immutag:/root/immutag \
 immutag:0.0.11 \
@@ -65,5 +119,6 @@ $input
 
 if [ "$cmd" = "find" ];then
     # Need permissions to write in ~/immutag.
-    rm $HOME/immutag/file > /dev/null 2>&1 ln -s $(cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g") $HOME/immutag/file
+    rm $HOME/immutag/file > /dev/null 2>&1
+    ln -s $(cat ~/immutag/.find_output | sed "s/\/root\/immutag/\/home\/$(whoami)\/immutag/g") $HOME/immutag/file
 fi
