@@ -41,15 +41,33 @@ if [ "$cmd" = "run" ];then
     fi
 
     if [ "$test_type" = "all" ];then
+        echo ""
+	echo "add_file"
        ./test_case.sh run add_file    "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "add_tag"
        ./test_case.sh run add_tag     "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "init"
        ./test_case.sh run init        "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "tag_rm"
        ./test_case.sh run tag_rm      "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "roll"
        ./test_case.sh run roll        "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "roll_specific_store"
        ./test_case.sh run roll_specific_store "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "commit"
        ./test_case.sh run commit      "$sudo_flag" "$hardstart_flag"
+        echo ""
+	echo "tag_replace"
        ./test_case.sh run tag_replace "$sudo_flag" "$hardstart_flag"
     else
+        echo ""
+	echo "$test_type"
         ./test_case.sh run "$test_type" "$sudo_flag" "$hardstart_flag"
     fi
 
