@@ -11,6 +11,10 @@ name=$(echo "$input" | cut -d " " -f 1)
 file=$(echo "$input" | cut -d " " -f 2)
 file_abs_path=$("$immutag_path"/stage/"$file")
 
+echo "file abs path"
+echo "$file_abs_path"
+echo ""
+
 # Exit script here if we can't find the file to be added to the store.
 if [ ! -f "$file_abs_path" ];then
     echo "Can't find file."
@@ -26,7 +30,7 @@ fi
 #tags=$(echo "$input" | cut -d " " -f 3-)
 #metadata=$(echo "$fname" "$ext" "$tags")
 
-tags=$(echo "$input" | cut -d " " -f 3-)
+tags=$(echo "$input" | cut -d " " -f 3- | _imt_get_rid_of_quotation_marks)
 metadata=$(echo "$tags")
 
 echo "add file: $file"
