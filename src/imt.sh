@@ -132,7 +132,7 @@ if [ "$cmd" = "update" ];then
 	storename="main"
     fi
 
-    imt_update_file "$storename" "$addr" "$immutag_path"/stage/"$fname"
+    imt_update_file "$storename" "$addr" "$immutag_path"/stage/"$filename"
 fi
 
 #if [ "$cmd" = "add" ];then

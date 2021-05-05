@@ -30,7 +30,7 @@ fi
 #tags=$(echo "$input" | cut -d " " -f 3-)
 #metadata=$(echo "$fname" "$ext" "$tags")
 
-tags=$(echo "$input" | cut -d " " -f 3- | _imt_get_rid_of_quotation_marks)
+tags=$(echo "$input" | cut -d " " -f 3-)
 metadata=$(echo "$tags")
 
 echo "add file: $file"
