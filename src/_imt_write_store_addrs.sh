@@ -19,6 +19,11 @@ config_path=$immutag_path/$name/"$addresses_type"-addresses
 ls $config_path
 config_exists=$(eval echo $?)
 
+if [ "$config_exists" = "2" ]; then
+   # Create config
+   echo '{ "sha256": { "version": "arg", "addr": "arg" }, "ipfs": { "version": "arg", "addr": "arg"}, "git_annex": { "version": "arg", "addr": "arg"} }' > $config_path
+fi
+
 while [ $(cat "$config_path") = "" ]
 do
      #if [ "$config_exists" = "2" ]; then
