@@ -1,6 +1,6 @@
 # Immutag
 
-Immutag is an experimental content-addressable file manager. Users add files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices. Full implentation will use bitcoin and ipfs, but other services can be dropped in its place. Right now, sharing is possible 'directly'.
+Immutag is an experimental distributed file manager. Users add content-addressed files with tags. Files are found by searching tags. Files can be stored and shared on network or locally. The software's components are interchangeable so that users and developers aren't locked-down. The software's protocol can be rewritten in any language for use by servers, web browsers, or embedded devices. Full implentation will use bitcoin and ipfs, but other services can be dropped in its place. Right now, sharing is possible 'directly'.
 
 
 **CAVEATS** This readme may not always accurately reflect the state of the software as this is a work-in-progress. The software is experimental and in alpha stage. In fact, it's prototype glued together with shellscripts. If the design choices and code structure seems confusing to you, please jump [here to learn more about the rationale](#code-structure-and-development-rationale).
@@ -10,6 +10,10 @@ Again, you dont' need to buy or use bitcoin to make use of most of the features 
 **Create an immutag store with a bitcoin mnemonic.**
 
 `imt create "lottery shop below speed oak blur wet onion change light bonus liquid life fat reflect cotton mass chest crowd brief skin major evidence bamboo"`
+
+Give immutag dir permissions.
+
+`sudo chmod -R 777 ~/immutag`
 
 You can also create named stores and do operations against named stores with `--store-name NAME`.
 
@@ -31,7 +35,15 @@ A menu of all the files will appear. Start typing terms such as, `mp3`, `vivaldi
 
 For example, open a file with xdg-open.
 
-`xdg-open $(imt find)`
+First select the file
+
+`imt find`
+
+Then open it by symlink.
+
+`xdg-open $(cat ~/immutag/file)`
+
+At the moment the 2 steps above to open a file are neccessary because immutag is containerized for closs-platorm. The plan is to elimate this soon so that all one needs to do is something like `xdg-open $(imt find)`.
 
 Actually, the find file menu may appear familiar. It's fzf: a cli utility to find files.
 
@@ -39,7 +51,9 @@ Actually, the find file menu may appear familiar. It's fzf: a cli utility to fin
 
 So for example to add the tag 'name=four-seasons' to our vivaldi four seasons song:
 
-`imt add-tag music "$(imt find --address main)" name=four-seasons`
+`imt find --addr`
+
+`imt add-tag music "$(cat ~/immutag/addr)" name=four-seasons`
 
 If we happen to remember the name, we can just search
 
@@ -51,7 +65,9 @@ If we happen to remember the name, we can just search
 
 You'll select the file from the menu.
 
-`imt replace-tags $(imt find --address music) renaissance orchestral italy`
+`imt find --addr`
+
+`imt replace-tags $(cat ~/immutag/addr) renaissance orchestral italy`
 
 **To update a file.**
 
@@ -59,7 +75,13 @@ You'll select the file from the menu.
 
 Let's say we remastered that vivaldi track and we want to update the file to latest.
 
-imt update $(imt find --addr) remaster-vivaldi-four-seasons.mp3
+Select the file so that it get's outputed to a file called addr.
+
+`imt find --addr`
+
+Now update file with that address.
+
+`imt update $(cat ~/immutag/addr) remaster-vivaldi-four-seasons.mp3`
 
 By the way, all of this operations can be rolled back and forward with `imt rollback` and `imt rollforward`.
 
@@ -82,30 +104,57 @@ imt create --store-name NAME "MNEMONIC"
 imt wormhole-recv --store-name NAME
 ```
 
-## Install (dev)
+## Install
 
-Clone the repo and depending on the version of git you have...
+Clone the immutag and the cli and depending on the version of git you have...
 
 `git clone --recursive -j8 https://github.com/immutag/immutag`
+
+`git clone --recursive -j8 https://github.com/immutag/imt-cli`
 
 or
 
 `git clone --recursive-submodules -j8 https://github.com/immutag/immutag`
 
+`git clone --recursive-submodules -j8 https://github.com/immutag/imt-cli`
+
 
 You'll need docker installed.
 
 ```
+cd immutag
 docker volume create --name=immutag-cargo-data
 docker volume create --name=nix-data
-docker build -t immutag:0.0.5 .
+docker build -t immutag:0.0.11 .
 ```
+
+`cd ../imt-cl`
+`cargo build --bin imt-cli`
+
+Copy the binary somewhere in your $PATH.
+
+`cp target/debug/imt-cli ~/.local/bin/imt`
+
 
 At the moment, the install is for a development environment and not for user distribution.
 
-## Dev workflow
+### Install (dev test)
 
-It's recommended that run tests first. To jump to test info, see [here](#test).
+You'll need docker installed.
+
+
+```
+mv Dockerfile.cli Dockerfile
+docker build -t immutag-test:0.0.1 .
+```
+
+```
+docker volume create --name=immutag-cargo-data
+docker volume create --name=immutag-cargo-data-b
+docker volume create --name=nix-data
+docker volume create --name=nix-data-b
+docker build -t immutag-test:0.0.1 .
+```
 
 To run all tests
 
@@ -114,9 +163,30 @@ cd tests
 ./test.sh run all --sudo --hard-start
 ```
 
+Make sure to restore the Dockerfiles with `git restore Dockefile.cli Dockerfile` when not testing.
+
+## Dev workflow
+
+It's recommended that run tests first. To jump to test info, see [here](#test).
+
+To run all tests (make sure you followed dev test install instructions).
+
+```
+cd tests
+./test.sh run all --sudo --hard-start
+```
+
 Omit the sudo flag if you don't require sudo to run docker.
 
-To launch.
+Every time you edit the code base,
+
+`docker build -t immutag-test:0.0.1 .`
+
+if your testing or if your using the cli
+
+`docker build -t immutag-test:0.0.11 .`
+
+To launch and work wth imt in the container.
 
 ```
 docker-compose up -d
