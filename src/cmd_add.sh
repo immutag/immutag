@@ -36,11 +36,17 @@ metadata=$(echo "$tags")
 echo "add file: $file"
 echo "tags: $metadata"
 
-cd "$immutag_path" || exit
-cd "$name" || exit
-
-
 addr=$(eval _imt_print_list_only | _imt_new_index_addr | _imt_append_list "$metadata")
+
+# Get file/* into an array and fail if new file already exists.
+echo "test"
+arr=("$immutag_path"/"$name"/files/*)
+for ((i=0; i<${#arr[@]}; i++)); do
+    echo "${arr[$i]}"
+    cmp --silent "$file_abs_path" "${arr[$i]}" && echo "File already exists." && exit
+done
+
+# cmp each agains file to see if already exists
 
 mv "$file_abs_path" files/"$addr"
 

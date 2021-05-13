@@ -200,18 +200,28 @@ if [ "$cmd" = "add" ];then
 
         metadata=$(echo "$input" | cut -d " " -f 3-)
 
-        echo "add file: $file"
-        echo "tags: $metadata"
-
         cd "$immutag_path" || exit
         cd "$name" || exit
 
 
-        addr=$(eval _imt_print_list_only | _imt_new_index_addr | _imt_append_list "$metadata")
+	addrs=$(eval _imt_print_list_only | _imt_new_index_addr)
+        index_addr=$(echo "$addrs" | cut -d " " -f 1)
+        addr=$(echo "$addrs" | cut -d " " -f 2)
 
-        cp "$file_abs_path" files/"$addr"
+        arr=("$immutag_path"/"$name"/files/*)
+        for ((i=0; i<${#arr[@]}; i++)); do
+            cmp --silent "$file_abs_path" "${arr[$i]}" && exit_update="2" && break || exit_update="0"
+        done
 
-        _imt_commit "$name"
+	if [ "$exit_update" = "0" ];then
+	    echo "$addrs" | _imt_append_list "$metadata"
+            cp "$file_abs_path" files/"$addr"
+            _imt_commit "$name"
+            echo "add file: $file"
+            echo "tags: $metadata"
+	else
+	    echo "File already exists."
+	fi
     else
         immutag_path="$HOME/immutag"
 
@@ -241,18 +251,29 @@ if [ "$cmd" = "add" ];then
         tags=$(echo "$input" | cut -d " " -f 3-)
         metadata=$(echo "$fname" "$ext" "$tags")
 
-        echo "add file: $file"
-        echo "tags: $metadata"
-
         cd "$immutag_path" || exit
         cd "$name" || exit
 
 
-        addr=$(eval _imt_print_list_only | _imt_new_index_addr | _imt_append_list "$metadata")
+	addrs=$(eval _imt_print_list_only | _imt_new_index_addr)
+        index_addr=$(echo "$addrs" | cut -d " " -f 1)
+        addr=$(echo "$addrs" | cut -d " " -f 2)
 
-        cp "$file_abs_path" files/"$addr"
+        arr=("$immutag_path"/"$name"/files/*)
+        for ((i=0; i<${#arr[@]}; i++)); do
+            cmp --silent "$file_abs_path" "${arr[$i]}" && exit_update="2" && break || exit_update="0"
+        done
 
-        _imt_commit "$name"
+	if [ "$exit_update" = "0" ];then
+	    echo "$addrs" | _imt_append_list "$metadata"
+            cp "$file_abs_path" files/"$addr"
+            cp "$file_abs_path" files/"$addr"
+            _imt_commit "$name"
+            echo "add file: $file"
+            echo "tags: $metadata"
+	else
+	    echo "File already exists."
+	fi
     fi
 fi
 
