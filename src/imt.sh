@@ -410,7 +410,7 @@ if [ "$cmd" = "find" ];then
 
     if [ -n "${ADDRESS}" ];then
 	    FIND=$(imt_find "$storename" addr)
-            echo $FIND > $HOME/immutag/addr
+            echo $FIND | tr -d '\n' > $HOME/immutag/addr
             echo "open symlink at immutag/addr"
     else
 	    FIND=$(imt_find "$storename")
