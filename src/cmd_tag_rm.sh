@@ -9,3 +9,5 @@ cd $immutag_path
 cd $name
 
 echo "$addr" | _imt_tag_rm file-list.txt
+
+_imt_commit "$name"
