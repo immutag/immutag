@@ -142,9 +142,9 @@ At the moment, the install is for a development environment and not for user dis
 
 You'll need docker installed.
 
-
 ```
-mv Dockerfile.cli Dockerfile
+mv Dockerfile dockerfile.app
+mv dockerfile.test Dockerfile
 docker build -t immutag-test:0.0.1 .
 ```
 
