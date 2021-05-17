@@ -19,7 +19,9 @@ if [ "$store_oids_a" != "$store_oids_b" ]; then
 
     # We can't rollforward the git-annex branch also, but if we do make the changes permanent, we can.
     git log --reverse --pretty=%H master | grep -A 1 $(git rev-parse HEAD) | tail -n1 | xargs git checkout > /dev/null 2>&1
-
+    echo "next generation"
+else
+    echo "already the latest generation"
 fi
 #echo "$oid_1"
 #echo "$oid_2"

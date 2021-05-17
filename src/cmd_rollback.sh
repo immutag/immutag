@@ -23,6 +23,10 @@ if [ "$store_oids_a" != "$store_oids_b" ]; then
 
     # We can't rollback the git-annex branch also, but if we do make the changes permanent, we can.
     git checkout HEAD~1 > /dev/null 2>&1
+
+    echo "back a generation"
+else
+    echo "already the earliest generation"
 fi
 
 #echo "$oid_1"
