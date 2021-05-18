@@ -190,7 +190,9 @@ if [ "$cmd" = "add" ];then
 	fi
 
 	file="$2"
-        file_abs_path=$(eval realpath "$file")
+	#file=$(echo "$file" | sed 's/\\//g')
+	#echo "$file"
+        file_abs_path=$(realpath "$file")
 
         # Exit script here if we can't find the file to be added to the store.
         if [ ! -f "$file_abs_path" ];then
@@ -234,7 +236,9 @@ if [ "$cmd" = "add" ];then
 	fi
 
 	file="$2"
-        file_abs_path=$(eval realpath "$file")
+	#file=$(echo "$file" | sed 's/\\//g')
+	#echo "$file"
+        file_abs_path=$(realpath "$file")
 
         # Exit script here if we can't find the file to be added to the store.
         if [ ! -f "$file_abs_path" ];then
