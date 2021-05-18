@@ -200,7 +200,14 @@ if [ "$cmd" = "add" ];then
             exit
         fi
 
-        metadata=$(echo "$input" | cut -d " " -f 3-)
+	inputns="$(echo $input | sed 's/\\//')"
+	inputns="$(echo $inputns | sed 's/add//')"
+	filens="$(echo $file | sed 's/\\//')"
+
+        #metadata=$(echo "$input" | sed -i "s/$file//" | cut -d " " -f 3-)
+        metadata=$(echo "$inputns" | sed "s/$filens//")
+        metadata=$(echo "$metadata" | sed 's/  //')
+	echo "$metadata"
 
         cd "$immutag_path" || exit
         cd "$name" || exit
@@ -247,13 +254,21 @@ if [ "$cmd" = "add" ];then
         fi
 
         # To add file name and extension to tag.
-        fullfilename="$file"
-        filename=$(basename "$fullfilename")
-        fname="${filename%.*}"
-        ext="${filename##*.}"
+        #fullfilename="$file"
+        #filename=$(basename "$fullfilename")
+        #fname="${filename%.*}"
+        #ext="${filename##*.}"
 
-        tags=$(echo "$input" | cut -d " " -f 3-)
-        metadata=$(echo "$fname" "$ext" "$tags")
+        #metadata=$(echo "$input" | cut -d " " -f 3-)
+	inputns="$(echo $input | sed 's/\\//')"
+	inputns="$(echo $inputns | sed 's/add//')"
+	filens="$(echo $file | sed 's/\\//')"
+
+        #metadata=$(echo "$input" | sed -i "s/$file//" | cut -d " " -f 3-)
+        metadata=$(echo "$inputns" | sed "s/$filens//")
+        metadata=$(echo "$metadata" | sed 's/  //')
+        #metadata=$(echo "$input" | sed -i "s/$file//" | cut -d " " -f 3-)
+	echo "$metadata"
 
         cd "$immutag_path" || exit
         cd "$name" || exit
