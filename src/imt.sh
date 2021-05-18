@@ -93,7 +93,7 @@ if [ "$cmd" = "create" ];then
 	storename="main"
     fi
 
-    imt_init "$storename" "$mnemonic"
+    imt_init "$storename" "$mnemonic" > /dev/null 2>&1
 fi
 
 if [ "$cmd" = "update" ];then
