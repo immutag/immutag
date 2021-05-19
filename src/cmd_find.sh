@@ -8,7 +8,7 @@ cd $immutag_path
 cd $name
 
 
-output=$(_imt_print_list_only | fzf | cut -d " " -f 2)
+output=$(_imt_print_list_only | fzf --layout=reverse| cut -d " " -f 2)
 
 file_path=$(eval realpath files/"$output")
 
