@@ -1,4 +1,7 @@
 FROM buildpack-deps:buster
+
+RUN sed -i s/httpredir.debian.org/archive.debian.org/g /etc/apt/sources.list && sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list && sed -i s/security.debian.org/archive.debian.org/g /etc/apt/sources.list && echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list.d/buster-archive.list && echo "deb http://archive.debian.org/debian-security buster/updates main" >> /etc/apt/sources.list.d/buster-archive.list && echo "Acquire::Check-Valid-Until \"false\";" > /etc/apt/apt.conf.d/99no-check-valid-until
+
 #
 # Install nix
 # https://github.com/heathdrobertson/ubuntu_nix/blob/main/Dockerfile.
@@ -10,7 +13,7 @@ RUN apt-get clean && apt-get purge && apt-get autoremove --purge -y
 
 WORKDIR /
 # Download Nix and install it into the system.
-ARG NIX_VERSION=2.3.10
+ARG NIX_VERSION=2.18.1
 RUN wget https://nixos.org/releases/nix/nix-${NIX_VERSION}/nix-${NIX_VERSION}-x86_64-linux.tar.xz \
     && tar xf nix-${NIX_VERSION}-x86_64-linux.tar.xz \
     && addgroup --system --gid 30000 nixbld \
@@ -61,18 +64,18 @@ RUN nix-channel --update; nix-env -iA nixpkgs.nix
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.50.0
+    RUST_VERSION=1.65.0
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
-        amd64) rustArch='x86_64-unknown-linux-gnu'; rustupSha256='ed7773edaf1d289656bdec2aacad12413b38ad0193fff54b2231f5140a4b07c5' ;; \
+        amd64) rustArch='x86_64-unknown-linux-gnu'; rustupSha256='bb31eaf643926b2ee9f4d8d6fc0e2835e03c0a60f34d324048aa194f0b29a71c' ;; \
         armhf) rustArch='armv7-unknown-linux-gnueabihf'; rustupSha256='7a7b9d246ad63358705d8d4a7d5c2ef1adfec24525d1d5c44a7739e1b867e84d' ;; \
         arm64) rustArch='aarch64-unknown-linux-gnu'; rustupSha256='f80a0a792b3ab905ab4919474daf4d3f60e574fc6987e69bfba2fd877241a8de' ;; \
         i386) rustArch='i686-unknown-linux-gnu'; rustupSha256='4473c18286aa1831683a772706d9a5c98b87a61cc014d38063e00a63a480afef' ;; \
         *) echo >&2 "unsupported architecture: ${dpkgArch}"; exit 1 ;; \
     esac; \
-    url="https://static.rust-lang.org/rustup/archive/1.23.1/${rustArch}/rustup-init"; \
+    url="https://static.rust-lang.org/rustup/archive/1.25.2/${rustArch}/rustup-init"; \
     wget "$url"; \
     echo "${rustupSha256} *rustup-init" | sha256sum -c -; \
     chmod +x rustup-init; \
@@ -90,7 +93,7 @@ RUN apt-get update && \
 
 RUN nix-env -iA nixpkgs.shunit2
 
-RUN cargo install --version 0.7.2 hal
+RUN cargo install --locked --version 0.7.2 hal
 
 RUN apt-get install -y jq
 
